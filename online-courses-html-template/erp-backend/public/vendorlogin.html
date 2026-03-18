@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 font-sans">
+
+    <div class="container mx-auto p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Vendor Login -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all">
+                <h1 class="text-3xl font-bold text-center mb-2">Vendor Login</h1>
+                <p class="text-gray-600 text-center mb-6">Sign in to your vendor account</p>
+                <form class="space-y-6">
+                    <div>
+                        <label class="text-sm font-medium">Email</label>
+                        <input type="email" class="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">Password</label>
+                        <input type="password" class="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span class="ml-2 text-sm">Remember me</span>
+                        </label>
+                        <button class="text-sm text-blue-600 hover:underline">Forgot password?</button>
+                    </div>
+                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Sign In as Vendor</button>
+                </form>
+            </div>
+
+            <!-- Admin Login -->
+            
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h2 class="text-xl font-semibold mb-4">List of Workers</h2>
+        <div id="worker-list" class="space-y-4"></div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12 text-center text-sm">
+        &copy; 2025 MPS School. All rights reserved.
+    </footer>
+
+    <script>
+        fetch("http://localhost:5000/workers")
+            .then(response => response.json())
+            .then(data => {
+                const workerList = document.getElementById("worker-list");
+                workerList.innerHTML = "";
+                data.forEach(worker => {
+                    workerList.innerHTML += `
+                        <div class="bg-white p-4 shadow-md rounded-lg">
+                            <p><strong>Name:</strong> ${worker.name}</p>
+                            <p><strong>Position:</strong> ${worker.position}</p>
+                            <p><strong>Contact:</strong> ${worker.contact}</p>
+                            <p><strong>Shift:</strong> ${worker.shift}</p>
+                            <p><strong>Active Since:</strong> ${worker.activeSince}</p>
+                        </div>`;
+                });
+            })
+            .catch(error => console.error("Error fetching workers:", error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Student Management System</title>
+    <link rel="stylesheet" href="admindashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staff2.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                <li><a href="addstudentform.html">Student Form</a></li>
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Welcome Admin.</h1>
+            <div class="user-info">
+                <div class="searchbar-container">
+                    <input type="text" id="searchInput" placeholder="Search School ID ">
+                    <button onclick="search()">Search</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="cards">
+            <!-- Card for Total Teachers -->
+            <div class="card patients-card">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>Total Teachers</h3>
+                <p>8</p>
+            </div>
+
+            <!-- Card for Total Students -->
+            <div class="card doctors-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Total Students</h3>
+                <p>7</p>
+            </div>
+
+            <!-- Card for Total Staff -->
+            <div class="card doctors-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>Total Staffs</h3>
+                <p>7</p>
+            </div>
+
+            <!-- Card for Upcoming Events -->
+            <div class="card appointments-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Upcoming Events</h3>
+                <p>20</p>
+            </div>
+
+            <!-- Card for New Reports -->
+            
+        </section>
+
+        <section class="notifications">
+            <h2>Recent Notifications</h2>
+            <ul>
+                <li>
+                    <strong>New Assignment:</strong> Math assignment for Grade 8 is due on 15th Jan 2025. <span class="timestamp">2 hours ago</span>
+                </li>
+                <li>
+                    <strong>Parent-Teacher Meeting:</strong> Scheduled for 20th Jan 2025 at 10:00 AM. <span class="timestamp">5 hours ago</span>
+                </li>
+                <li>
+                    <strong>Exam Schedule:</strong> Mid-term exams for Grade 10 have been uploaded. <span class="timestamp">1 day ago</span>
+                </li>
+                <li>
+                    <strong>Holiday Notice:</strong> School will remain closed on 26th Jan 2025 for Republic Day. <span class="timestamp">2 days ago</span>
+                </li>
+                <li>
+                    <strong>Fee Reminder:</strong> Last date for fee payment is 31st Jan 2025. <span class="timestamp">3 days ago</span>
+                </li>
+            </ul>
+        </section>
+        
+
+        <div class="card calendar-card">
+            <div class="calendar-container">
+                <header>
+                    <button class="calendar-btn" id="prev-month">&lt;</button>
+                    <h4 id="month-year"></h4>
+                    <button class="calendar-btn" id="next-month">&gt;</button>
+                </header>
+                <table class="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+            </div>
+        </div>
+        <!--Add Charts-->
+        <div class="graphBox">
+            <!-- Box 1: Chart Container -->
+            <div class="box">
+                <canvas id="myChart" width="250" height="250"></canvas>
+            </div>
+
+            <div class="box">
+                <canvas id="attendanceChart" width="250" height="250"></canvas>
+            </div>
+        </div>        
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script>
+      window.onload = function() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar', // Changed from 'polarArea' to 'bar'
+        data: {
+            labels: ['10', '5', '8'], // Labels remain the same
+            datasets: [{
+                label: '# of classes', // Label for the dataset
+                data: [40, 20, 10], // Data remains the same
+                backgroundColor: [
+                    'rgba(255,99,132,0.2)',
+                    'rgba(54,162,235,0.2)',
+                    'rgba(255,206,86,0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54,162,235,1)',
+                    'rgba(255,206,86,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true, position: 'top' }, // Show legend
+                title: { display: true, text: 'Number of Students Admission' } // Chart title
+            },
+            scales: {
+                y: {
+                    beginAtZero: true, // Ensure the y-axis starts at zero
+                    title: { display: true, text: 'Number of Admission' } // Y-axis title
+                },
+                x: {
+                    title: { display: true, text: 'classes' } // X-axis title
+                }
+            }
+        }
+    });
+};
+    </script>
+
+<script>
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Students Present', 'Students Absent', 'Teachers Present', 'Teachers Absent', 'Staff Present', 'Staff Absent'],
+            datasets: [{
+                label: 'Attendance Overview',
+                data: [450, 50, 48, 2, 28, 2],
+                backgroundColor: [
+                    '#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Receipt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <div class="bg-white shadow-md py-4 mb-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="img/logo mps.jpg" alt="MPS School Logo" class="h-16">
+                <div class="text-center text-gray-600">
+                    <h1 class="text-xl font-semibold text-gray-800">Maheshwari Public School</h1>
+                    <p>Affiliated to CBSE, Delhi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="container mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Generate Receipt</h2>
+        <form id="receiptForm" class="space-y-4">
+            <div>
+                <label for="studentName" class="block text-lg font-medium text-gray-700">Student Name</label>
+                <input type="text" id="studentName" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter student's full name">
+            </div>
+            <div>
+                <label for="class" class="block text-lg font-medium text-gray-700">Class</label>
+                <input type="text" id="class" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter class (e.g. 8A)">
+            </div>
+            <div>
+                <label for="receiptNo" class="block text-lg font-medium text-gray-700">Receipt Number</label>
+                <input type="text" id="receiptNo" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter receipt number">
+            </div>
+            <div>
+                <label for="amount" class="block text-lg font-medium text-gray-700">Admission Fee</label>
+                <input type="number" id="admissionFee" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter admission fee">
+            </div>
+            <div>
+                <label for="otherFee" class="block text-lg font-medium text-gray-700">Other Fee</label>
+                <input type="number" id="otherFee" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter other fee">
+            </div>
+            <div>
+                <label for="tutionFee" class="block text-lg font-medium text-gray-700">Tuition Fee</label>
+                <input type="number" id="tutionFee" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter tuition fee">
+            </div>
+            <div>
+                <label for="date" class="block text-lg font-medium text-gray-700">Date</label>
+                <input type="date" id="date" class="w-full p-2 border border-gray-300 rounded-md">
+            </div>
+            <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-full w-full hover:bg-blue-700 transition duration-300">Generate Receipt</button>
+        </form>
+    </div>
+
+    <!-- Receipt Display -->
+    <div id="receiptPreview" class="container mx-auto bg-white p-6 rounded-lg shadow-md mt-6 hidden">
+        <div id="receiptContent" class="space-y-4">
+            <div class="text-center">
+                <h1 class="text-2xl font-bold text-gray-800">Thank you for your payment!</h1>
+            </div>
+            <div class="text-center">
+                <h1 class="text-xl font-bold text-gray-800">Maheshwari Public School</h1>
+                <p class="text-sm text-gray-600">Affiliated to CBSE, Delhi</p>
+                <p class="text-sm text-gray-600">Contact: +91 9876543210</p>
+            </div>
+            <hr>
+            <div>
+                <table class="table-auto w-full border-collapse border border-gray-400">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border border-gray-400 px-4 py-2">Sr. No.</th>
+                            <th class="border border-gray-400 px-4 py-2">Payment Details</th>
+                            <th class="border border-gray-400 px-4 py-2">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-gray-400 px-4 py-2">1</td>
+                            <td class="border border-gray-400 px-4 py-2">Admission Fee</td>
+                            <td class="border border-gray-400 px-4 py-2" id="admissionFeeText"></td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 px-4 py-2">2</td>
+                            <td class="border border-gray-400 px-4 py-2">Other Fee</td>
+                            <td class="border border-gray-400 px-4 py-2" id="otherFeeText"></td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 px-4 py-2">3</td>
+                            <td class="border border-gray-400 px-4 py-2">Tuition Fee</td>
+                            <td class="border border-gray-400 px-4 py-2" id="tutionFeeText"></td>
+                        </tr>
+                        <tr class="font-bold">
+                            <td colspan="2" class="border border-gray-400 px-4 py-2 text-right">Total</td>
+                            <td class="border border-gray-400 px-4 py-2" id="totalAmountText"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-4 font-bold">Amount in Words: <span id="amountInWords"></span></p>
+            </div>
+            <hr>
+            <div class="text-center text-gray-700">
+                <p>Student Receipt</p>
+            </div>
+        </div>
+    </div>
+<script>
+ // Convert number to words (handles up to 99999)
+function numberToWords(num) {
+    const ones = [
+        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+        "Eighteen", "Nineteen"
+    ];
+    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+    if (num === 0) return "Zero";
+    if (num < 20) return ones[num];
+    if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? " " + ones[num % 10] : "");
+    if (num < 1000) {
+        return ones[Math.floor(num / 100)] + " Hundred" + (num % 100 !== 0 ? " and " + numberToWords(num % 100) : "");
+    }
+    if (num < 100000) {
+        return (
+            numberToWords(Math.floor(num / 1000)) +
+            " Thousand" +
+            (num % 1000 !== 0 ? " " + numberToWords(num % 1000) : "")
+        );
+    }
+    return "Number too large";
+}
+
+// Initialize Receipt Number
+function initializeReceiptNumber() {
+    if (!localStorage.getItem("receiptNumber")) {
+        // Set initial receipt number if not present
+        localStorage.setItem("receiptNumber", "O/TF/2025-2026/1001");
+    }
+    // Set the receipt number in the input field
+    document.getElementById("receiptNo").value = localStorage.getItem("receiptNumber");
+}
+
+// Increment Receipt Number
+function incrementReceiptNumber() {
+    let currentReceiptNumber = localStorage.getItem("receiptNumber");
+    const parts = currentReceiptNumber.split("/");
+    const currentNumber = parseInt(parts[3], 10); // Extract the numeric part
+    const nextNumber = currentNumber + 1; // Increment it
+
+    // Reconstruct the receipt number with the updated numeric part
+    const nextReceiptNumber = `${parts[0]}/${parts[1]}/${parts[2]}/${nextNumber}`;
+    localStorage.setItem("receiptNumber", nextReceiptNumber); // Save updated receipt number
+    document.getElementById("receiptNo").value = nextReceiptNumber; // Update input field
+}
+
+// Call initializeReceiptNumber on page load
+initializeReceiptNumber();
+
+// Form Submission
+document.getElementById("receiptForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Fetch Form Values
+    const studentName = document.getElementById("studentName").value.trim();
+    const studentClass = document.getElementById("class").value.trim();
+    const receiptNo = document.getElementById("receiptNo").value.trim();
+    const admissionFee = parseFloat(document.getElementById("admissionFee").value.trim()) || 0;
+    const otherFee = parseFloat(document.getElementById("otherFee").value.trim()) || 0;
+    const tutionFee = parseFloat(document.getElementById("tutionFee").value.trim()) || 0;
+    const date = document.getElementById("date").value.trim();
+
+    const totalAmount = admissionFee + otherFee + tutionFee;
+
+    // Validation
+    if (!studentName || !studentClass || !receiptNo || totalAmount === 0 || !date) {
+        alert("Please fill all required fields correctly.");
+        return;
+    }
+
+    // Convert total amount to words
+    const amountInWords = numberToWords(totalAmount) + " Rupees Only";
+
+    // Generate Receipt HTML
+    const studentReceipt = `
+        <div style="font-family: Arial, sans-serif; margin: 0 auto; width: 100%; max-width: 600px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+            <h1 style="text-align: center; font-size: 24px; margin-bottom: 10px;">Maheshwari Public School</h1>
+            <p style="text-align: center; font-size: 14px;">Affiliated to CBSE, Delhi</p>
+            <p style="text-align: center; font-size: 14px;">Contact: +91 9876543210</p>
+            <hr style="margin: 20px 0;">
+            <h2 style="text-align: center; font-size: 18px; margin-bottom: 20px;">Thank you for your payment!</h2>
+            <h3 style="text-align: center; font-size: 16px; margin-bottom: 20px;">Student Copy</h3>
+            <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px; font-weight: bold;">Student Name:</td>
+                    <td style="padding: 8px;">${studentName}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: bold;">Class:</td>
+                    <td style="padding: 8px;">${studentClass}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: bold;">Receipt Number:</td>
+                    <td style="padding: 8px;">${receiptNo}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; font-weight: bold;">Date:</td>
+                    <td style="padding: 8px;">${date}</td>
+                </tr>
+            </table>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+                <thead>
+                    <tr style="background-color: #f5f5f5;">
+                        <th style="padding: 8px; border: 1px solid #ddd;">Sr. No.</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Payment Details</th>
+                        <th style="padding: 8px; border: 1px solid #ddd;">Amount (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Admission Fee</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${admissionFee.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">2</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Other Fee</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${otherFee.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd;">3</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">Tuition Fee</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${tutionFee.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: right; font-weight: bold;">Total</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${totalAmount.toFixed(2)}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; font-weight: bold;">Amount in Words: ${amountInWords}</p>
+            <hr style="margin: 20px 0;">
+        </div>
+    `;
+
+    const officeReceipt = studentReceipt.replace("Student Copy", "Office Copy");
+
+    const fullReceiptHTML = `<div>${studentReceipt}</div><div style="page-break-before: always;">${officeReceipt}</div>`;
+
+    // Generate PDF with both receipts
+    const options = {
+        margin: 0.5,
+        filename: "school_receipt.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+
+    html2pdf().set(options).from(fullReceiptHTML).save();
+
+    // Increment receipt number after download
+    incrementReceiptNumber();
+});
+</script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Entry - Single Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #4f46e5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <div class="container mx-auto p-6">
+        <h2 class="text-3xl font-bold text-center mb-6 text-indigo-600">Enter Marks for Student</h2>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <div class="flex flex-wrap items-center justify-between mb-6">
+                <div class="mb-4 md:mb-0">
+                    <h3 id="student-name" class="text-2xl font-semibold text-gray-800">Aadhya Kapoor</h3>
+                    <div id="class-name" class="text-indigo-500 text-lg">Class 5</div>
+                </div>
+                <img src="https://via.placeholder.com/120" alt="Student Photo" class="rounded-lg w-28 h-28 object-cover">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <thead>
+                        <tr class="bg-indigo-100 text-gray-700">
+                            <th class="px-4 py-2">Subject</th>
+                            <th class="px-4 py-2">Unit Test (20)</th>
+                            <th class="px-4 py-2">Half Yearly (80)</th>
+                            <th class="px-4 py-2">Final Exam (100)</th>
+                            <th class="px-4 py-2">Total Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">English</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">Maths</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">EVS</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">GK</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">Hindi</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                        <tr class="text-center border-t">
+                            <td class="px-4 py-2">Computer</td>
+                            <td><input type="number" max="20" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="80" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td><input type="number" max="100" value="0" class="w-16 text-center border rounded" onchange="updateMarks()"></td>
+                            <td class="total px-4 py-2">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6">
+                <h4 class="text-lg font-semibold">Grand Total: <span id="grandTotal" class="text-indigo-600">0</span></h4>
+                <h4 class="text-lg font-semibold">Percentage: <span id="percentage" class="text-indigo-600">0</span>%</h4>
+                <h4 class="text-lg font-semibold">CGPA: <span id="cgpa" class="text-indigo-600">0</span></h4>
+            </div>
+
+            <button class="mt-4 w-full py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700" onclick="downloadPDF()">Download PDF</button>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = "studentMarksData";
+
+        function updateMarks() {
+            const rows = document.querySelectorAll("tbody tr");
+            let grandTotal = 0;
+
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll("input");
+                let total = 0;
+                inputs.forEach(input => {
+                    total += parseInt(input.value) || 0;
+                });
+                row.querySelector(".total").textContent = total;
+                grandTotal += total;
+            });
+
+            const percentage = ((grandTotal / 1200) * 100).toFixed(2);
+            const cgpa = (percentage / 9.5).toFixed(2);
+
+            document.getElementById("grandTotal").textContent = grandTotal;
+            document.getElementById("percentage").textContent = percentage;
+            document.getElementById("cgpa").textContent = cgpa;
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ grandTotal, percentage, cgpa }));
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.text("Student Marksheet", 10, 10);
+            doc.text(`Name: Aadhya Kapoor`, 10, 20);
+            doc.text(`Class: 5`, 10, 30);
+            doc.text(`Grand Total: ${document.getElementById("grandTotal").textContent}`, 10, 40);
+            doc.text(`Percentage: ${document.getElementById("percentage").textContent}%`, 10, 50);
+            doc.text(`CGPA: ${document.getElementById("cgpa").textContent}`, 10, 60);
+
+            doc.save("marksheet.pdf");
+        }
+
+        window.onload = () => {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (savedData) {
+                document.getElementById("grandTotal").textContent = savedData.grandTotal || 0;
+                document.getElementById("percentage").textContent = savedData.percentage || 0;
+                document.getElementById("cgpa").textContent = savedData.cgpa || 0;
+            }
+        };
+    </script>
+</body>
+</html>

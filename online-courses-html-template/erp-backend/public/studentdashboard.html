@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      
+        /* Profile Section Animation */
+        #studentProfile {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        #studentProfile.show {
+            display: block;
+            transform: translateY(0);
+        }
+
+        /* Timetable Table Styling */
+        .timetable-table th, .timetable-table td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .timetable-table th {
+            background-color: #2d3e50;
+            color: white;
+        }
+
+        .timetable-table td {
+            text-align: center;
+        }
+
+        /* Dropdown menu styling */
+        select {
+            background-color: #ddd;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        /* Upcoming Events Card */
+        .notice-card {
+            background-color: #FF4545;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .notice-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .graph-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Graph Card */
+        .graph {
+            width: 48%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Graph Section */
+        .graph-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+        }
+
+        /* Set canvas width and height to make the graphs smaller */
+        #performanceChart, #attendanceChart {
+            width: 100% !important; /* Take up full width of the parent */
+            height: 180px !important; /* Reduced height for the graph */
+        }
+      
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+ <!-- School Header with Logo and Contact Information -->
+<!-- Sidebar -->
+<div class="flex h-screen">
+    <div class="w-64 bg-[#102C57] p-4 text-white p-6 flex flex-col justify-between shadow-lg">
+        <div>
+            <div class="text-2xl font-bold mb-8">Student Dashboard</div>
+            <nav>
+                <ul>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="studentdashboard.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-tachometer-alt mr-3"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="profileofstudent.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-user mr-3"></i> Student Profile
+                        </a>
+                    </li>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="studentassigmentdash.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-book mr-3"></i> Assignments
+                        </a>
+                    </li>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="feedbackofstudent.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-file mr-3"></i>Teacher Feedback
+                        </a>
+                    </li>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="marksheetforstudent.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-graduation-cap mr-3"></i> Exam Results
+                        </a>
+                    </li>
+                    <li class="mb-4 hover:bg-red-600 rounded-lg transition duration-300">
+                        <a href="holidaylist.html" class="flex items-center text-lg px-4 py-2 hover:text-white-300 transition duration-300">
+                            <i class="fa fa-calendar-alt mr-3"></i> Holidays
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Logout Button -->
+        <div>
+            <button class="bg-red-600 text-white py-2 px-4 rounded-full w-full mt-4 hover:bg-red-700 transition duration-300"
+             onclick="confirmLogout()">Logout
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 p-8 overflow-auto bg-gray-50">
+        <!-- Notice Bar -->
+        <div class="notice-card mb-6">
+            Upcoming Event: <strong>School Annual Day</strong> on January 30, 2025!
+        </div>
+
+        <!-- Top Bar -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center text-3xl font-bold text-gray-800">
+                Welcome, back Aadhya!
+            </div>
+
+            <!-- Profile Icon (Right) -->
+            <div id="profileIcon" class="bg-blue-800 text-white p-4 rounded-full shadow-lg cursor-pointer" onclick="toggleProfile()">
+                <i class="fa fa-user text-3xl"></i>
+            </div>
+        </div>
+
+        <!-- Timetable Table -->
+        <!-- Timetable Table -->
+<div class="bg-white p-6 mt-8 rounded-lg shadow-lg">
+    <h3 class="text-xl font-semibold mb-3">Timetable</h3>
+    <div class="overflow-x-auto">
+        <table class="min-w-full timetable-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>08:00-09:00AM</th>
+                    <th>09:00-10:00AM</th>
+                    <th>10:00-11:00AM</th>
+                    <th>11:00-11-30AM</th>
+                    <th>11:30-12:30PM</th>
+                    <th>12:30-1:30PM</th>
+                    <th>1:30-02:00PM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monday</td>
+                    <td>Maths</td>
+                    <td>EVS</td>
+                    <td>English</td>
+                    <td>Lunch</td>
+                    <td>Sanskrit</td>
+                    <td>Computer</td>
+                    <td>Dance</td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td>English</td>
+                    <td>Maths</td>
+                    <td>Hindi</td>
+                    <td>Lunch</td>
+                    <td>EVS</td>
+                    <td>Arts</td>
+                    <td>Sanskrit</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>English</td>
+                    <td>EVS</td>
+                    <td>Computer</td>
+                    <td>Lunch</td>
+                    <td>GK</td>
+                    <td>Maths</td>
+                    <td>Science</td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td>Computer</td>
+                    <td>English</td>
+                    <td>Arts</td>
+                    <td>Lunch</td>
+                    <td>Maths</td>
+                    <td>EVS</td>
+                    <td>Hindi</td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td>Arts</td>
+                    <td>Maths</td>
+                    <td>Hindi</td>
+                    <td>Lunch</td>
+                    <td>EVS</td>
+                    <td>English</td>
+                    <td>Dance</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>Hindi</td>
+                    <td>Games</td>
+                    <td>English</td>
+                    <td>lunch</td>
+                    <td>Maths</td>
+                    <td>EVS</td>
+                    <td>GK</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+        <!-- Performance and Attendance Graph -->
+        <div class="graph-container mt-8">
+            <div class="graph">
+                <div class="graph-section">
+                    <h3 class="text-xl font-semibold mb-3">Performance Graph</h3>
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="graph">
+                <div class="graph-section">
+                    <h3 class="text-xl font-semibold mb-3">Attendance Graph</h3>
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-lg p-6 w-80">
+    <div class="text-center mb-4">
+        <p class="mt-2 text-gray-600">Total Attendance: <span id="total-attendance" class="font-bold text-green-500"></span></p>
+        <p class="text-gray-600">Total Classes Attended: <span id="total-classes-attended" class="font-bold text-blue-500"></span> / <span id="total-classes" class="font-bold text-blue-500"></span></p>
+    </div>
+
+    <div class="mt-4">
+        <h4 class="text-lg font-semibold text-gray-800">Subject-wise Attendance</h4>
+        <ul class="mt-2 space-y-2">
+            <li class="flex justify-between text-gray-700">
+                <span>Math</span>
+                <span id="math-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>EVS</span>
+                <span id="evs-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>English</span>
+                <span id="english-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>Sanskrit</span>
+                <span id="sanskrit-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>GK</span>
+                <span id="gk-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>Hindi</span>
+                <span id="hindi-attendance" class="font-bold text-blue-600"></span>
+            </li>
+            <li class="flex justify-between text-gray-700">
+                <span>Computer</span>
+                <span id="computer-attendance" class="font-bold text-blue-600"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Student Profile (Initially Hidden) -->
+<div id="studentProfile" class="absolute top-0 right-0 bg-blue-800 text-white p-6 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="font-semibold text-xl">Student Profile</h4>
+        <i class="fa fa-chevron-up cursor-pointer" onclick="toggleProfile()"></i>
+    </div>
+    <div>
+        <p>Name: Aadhya Kapoor</p>
+        <p>Roll No: 101</p>
+        <p>Class: 8A</p>
+    </div>
+    <button class="bg-red-600 text-white py-2 px-4 rounded-full w-full mt-4 hover:bg-red-700 transition duration-300"
+    onclick="confirmLogout()">
+    Logout
+</button>
+
+</div>
+<footer class="bg-gray-800 text-white py-6 mt-12">
+    <!-- All Rights Reserved -->
+    <div class="text-center mt-4 text-sm text-gray-400">&copy; 2025 MPS School. All rights reserved.</div>
+</footer>
+
+
+<!-- Scripts for Chart.js (Performance and Attendance Graph) -->
+<script>
+    // Toggle Profile visibility with animation
+    function toggleProfile() {
+        const profileContent = document.getElementById("studentProfile");
+        profileContent.classList.toggle('show');
+    }
+
+    // Chart.js setup for Performance and Attendance Graphs
+    const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+    const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+
+    // Performance Chart
+    const performanceChart = new Chart(performanceCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Maths', 'EVS', 'English', 'Hindi', 'Sanskrit', 'Computer'],
+            datasets: [{
+                label: 'Marks',
+                data: [85, 90, 75, 80, 70, 95],
+                backgroundColor: '#3b82f6',
+                borderColor: '#3b82f6',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    function getAttendanceData2025() {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth(); // Current month (0-11)
+            const currentDay = currentDate.getDate(); // Current day
+            const attendance = {};
+
+            // Define months
+            const months = [
+                'January', 'February', 'March', 'April', 'May', 'June', 
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+
+            // Set attendance for past months and current month
+            for (let i = 0; i <= currentMonth; i++) {
+                attendance[months[i]] = i === currentMonth ? currentDay : 25; // Example: 22 days for past months
+            }
+
+            // Set attendance for future months as 0
+            for (let i = currentMonth + 1; i < months.length; i++) {
+                attendance[months[i]] = 0;
+            }
+
+            return attendance;
+        }
+
+        // Get dynamic data for 2025
+        const attendanceData2025 = getAttendanceData2025();
+
+        // Chart.js configuration
+        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(attendanceData2025), // Months
+                datasets: [{
+                    label: 'Attendance Days',
+                    data: Object.values(attendanceData2025), // Attendance counts
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 31 // Max days in a month
+                    }
+                }
+            }
+        });
+</script>
+<script>
+    // Define events for each month
+const events = {
+    January: [
+        { title: "School Annual Day", date: "January 30, 2025" },
+        { title: "Winter Break Ends", date: "January 20, 2025" }
+    ],
+    February: [
+        { title: "Sports Day", date: "February 15, 2025" },
+        { title: "Parent-Teacher Meeting", date: "February 25, 2025" }
+    ],
+    March: [
+        { title: "Exam Week", date: "March 10 - 14, 2025" },
+        { title: "Science Exhibition", date: "March 20, 2025" }
+    ],
+    // Add more months and events here
+    April: [
+        { title: "School Picnic", date: "April 5, 2025" },
+        { title: "Annual Art Show", date: "April 20, 2025" }
+    ]
+};
+
+// Function to display events for the current month
+function updateEventNotice() {
+    const currentMonth = new Date().toLocaleString('default', { month: 'long' }); // Get current month
+    const eventList = events[currentMonth];
+
+    if (eventList) {
+        const noticeCard = document.querySelector('.notice-card');
+        noticeCard.innerHTML = `
+            <strong>Upcoming Event(s) for ${currentMonth}:</strong>
+            <ul>
+                ${eventList.map(event => `<li><strong>${event.title}</strong> on ${event.date}</li>`).join('')}
+            </ul>
+        `;
+    }
+}
+
+// Call the function on page load to update the notice card with the current month's events
+// Call to display the current month's events
+window.onload = updateEventNotice;
+
+</script>
+<script>
+       // Sample data (replace with dynamic data)
+       const studentData = {
+            name: "Aadhya Kapoor",
+            totalClasses: 294,
+            totalAttended: 196,
+            subjects: {
+                math: { attended: 20, total: 42 },
+                evs: { attended: 32, total: 42 },
+                english: { attended: 25, total: 42 },
+                sanskrit: { attended: 30, total: 42 },
+                gk: { attended: 31, total: 42},
+                hindi: { attended: 28, total: 42},
+                computer:{attended:30,total:42}
+            },
+        };
+
+        // Calculate overall attendance percentage
+        const overallAttendance = (studentData.totalAttended / studentData.totalClasses) * 100;
+
+        // Set overall attendance on the page
+        document.getElementById("total-attendance").textContent = `${overallAttendance.toFixed(2)}%`;
+        document.getElementById("total-classes-attended").textContent = studentData.totalAttended;
+        document.getElementById("total-classes").textContent = studentData.totalClasses;
+
+        // Loop through each subject and calculate its attendance percentage
+        for (const subject in studentData.subjects) {
+            const subjectAttendance = (studentData.subjects[subject].attended / studentData.subjects[subject].total) * 100;
+            document.getElementById(`${subject}-attendance`).textContent = `${subjectAttendance.toFixed(2)}%`;
+        }
+
+</script>
+<script>
+    function confirmLogout() {
+        const isConfirmed = confirm("Are you sure you want to logout?");
+        if (isConfirmed) {
+            window.location.href = "login.html"; // Redirect to the login page
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            height: 100vh;
+            width: 240px; /* Always wide */
+            position: fixed;
+            background-color: #2c3e50;
+            color: #000;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #ecf0f1;
+        }
+
+        .sidebar li {
+            list-style: none;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+        }
+
+        .sidebar a {
+            color: #fff;
+            display: block;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px 0;
+            transition: background 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+            color: #1abc9c;
+        }
+
+        .sidebar select {
+            width: 80%;
+            margin: 10px auto;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 240px; /* Space for the sidebar */
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background-color: #2d3748;
+            color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-card .card-image {
+            width: 100%;
+            height: 150px;
+            background-color: #48bb78;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .student-card p {
+            font-weight: bold;
+        }
+
+        .student-card button {
+            background-color: #3182ce;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .student-card button:hover {
+            background-color: #63b3ed;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="fixed w-60 text-white h-screen flex flex-col items-center py-6 bg-[#2c3e50]">
+        <img src="img/logo mps.jpg" alt="MPS Logo" class="w-16 h-16 rounded-full mb-4">
+        <h2 class="text-lg mb-6">Maheshwari Public School</h2>
+        <select id="schoolDropdown" onchange="openSchoolDashboard()" class="bg-[#2c3e50] text-white py-2 px-3 rounded-lg mb-6 w-3/4">
+            <option value="">Select a School</option>
+            <option value="Branch 1">Pratap Nagar Jaipur</option>
+            <option value="Branch 2">Jawahar Nagar Jaipur</option>
+            <option value="Branch 3">Tilak Nagar Jaipur</option>
+            <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+            <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+        </select>
+        <a href="teacherdash.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Dashboard</a>
+        <a href="teacherstudentpage.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Students</a>
+        <a href="teacherassigment.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Assignments</a>
+        <a href="tStudentDetails.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Examination</a>
+        <a href="profile.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Profile</a>
+        <a href="feedbackformteacher.html" class="w-full text-center py-2 px-4 bg-blue-500 rounded-lg mb-2">Feedback</a>
+        <a href="login.html" 
+        onclick="return confirm('Are you sure you want to logout?')" 
+        class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">
+         Logout
+     </a>
+     
+    </div>
+        
+        
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Student Card 1 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student1.jpg"></div>
+            <p>Aadhya Kapoor</p>
+            <p>Roll No: 101</p>
+            <button onclick="saveStudentDetails('Aadhya Kapoor', '101')">See more</button>
+        </div>
+
+        <!-- Student Card 2 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student2.jpg"></div>
+            <p>Ananya Singh</p>
+            <p>Roll No: 102</p>
+            <button onclick="saveStudentDetails('Ananya Singh', '102')">See more</button>
+        </div>
+
+        <!-- Student Card 3 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student4.jpg"></div>
+            <p>Diya Sharma</p>
+            <p>Roll No: 103</p>
+            <button onclick="saveStudentDetails('Diya Sharma', '103')">See more</button>
+        </div>
+
+        <!-- Student Card 4 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student3.jpg"></div>
+            <p>Devansh Yadav</p>
+            <p>Roll No: 104</p>
+            <button onclick="saveStudentDetails('Devansh Yadav', '104')">See more</button>
+        </div>
+
+        <!-- Student Card 5 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student5.jpg"></div>
+            <p>Reyansh Verma</p>
+            <p>Roll No: 105</p>
+            <button onclick="saveStudentDetails('Reyansh Verma', '105')">See more</button>
+        </div>
+
+        <!-- Student Card 6 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student6.jpg"></div>
+            <p>Rohan Joshi</p>
+            <p>Roll No: 106</p>
+            <button onclick="saveStudentDetails('Rohan Joshi', '106')">See more</button>
+        </div>
+
+        <!-- Student Card 7 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student7.jpg"></div>
+            <p>Krish Singh</p>
+            <p>Roll No: 107</p>
+            <button onclick="saveStudentDetails('Krish Singh', '107')">See more</button>
+        </div>
+
+        <!-- Student Card 8 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student8.jpg"></div>
+            <p>Priya Yadav</p>
+            <p>Roll No: 108</p>
+            <button onclick="saveStudentDetails('Priya Yadav', '108')">See more</button>
+        </div>
+
+        <!-- Student Card 9 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student9.jpg"></div>
+            <p>Rhea Verma</p>
+            <p>Roll No: 109</p>
+            <button onclick="saveStudentDetails('Rhea Verma', '109')">See more</button>
+        </div>
+
+        <!-- Student Card 10 -->
+        <div class="student-card">
+            <div class="card-image"><img src="img/student10.jpg"></div>
+            <p>Rohan Joshi</p>
+            <p>Roll No: 110</p>
+            <button onclick="saveStudentDetails('Rohan Joshi', '110')">See more</button>
+        </div>
+    </div>
+
+   
+
+    <script>
+        // Function to save student details to localStorage when "See more" button is clicked
+         // Function to save student details to localStorage when "See more" button is clicked
+         function saveStudentDetails(name, rollNo) {
+            const studentDetails = {
+                name: name,
+                rollNo: rollNo,
+                dob: "dob",  // Example Data
+                aadhar: "aadhar",  // Example Data
+                fatherName: "fatherName",  // Example Data
+                motherName: "motherName"  // Example Data
+            };
+
+            // Save details to localStorage using rollNo as the key
+            localStorage.setItem(`studentDetails-${rollNo}`, JSON.stringify(studentDetails));
+
+            // Redirect to the student details page with the rollNo in the URL
+            window.location.href = `teacherstudentsdetail.html?rollNo=${rollNo}`;
+        }
+
+        // School dropdown selection handling
+        function openSchoolDashboard() {
+            const selectedSchool = document.getElementById('schoolDropdown').value;
+            if (selectedSchool) {
+                alert('Selected school: ' + selectedSchool);
+            }
+        }
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the authentication dropdown and the link to toggle
+    const authDropdown = document.getElementById('authentication');
+    const authLink = document.getElementById('authDropdown');
+
+    // Initially hide the authentication dropdown
+    authDropdown.style.display = 'none';
+
+    // Add event listener to toggle visibility on click
+    authLink.addEventListener('click', function (event) {
+        event.preventDefault();  // Prevent default anchor behavior
+
+        // Toggle the dropdown visibility
+        if (authDropdown.style.display === 'none' || authDropdown.style.display === '') {
+            authDropdown.style.display = 'block'; // Show the dropdown
+        } else {
+            authDropdown.style.display = 'none'; // Hide the dropdown
+        }
+    });
+});
+
+
+</script>
+</body>
+</html>

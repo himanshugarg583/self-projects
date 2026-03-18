@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Feedback Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans flex">
+
+    <!-- Sidebar -->
+    <div class="fixed w-60 text-white h-screen flex flex-col items-center py-6 bg-[#2c3e50]">
+        <img src="img/logo mps.jpg" alt="MPS Logo" class="w-16 h-16 rounded-full mb-4">
+        <h2 class="text-lg mb-6 text-center">Maheshwari Public School</h2>
+        <select id="schoolDropdown" onchange="openSchoolDashboard()" 
+            class="bg-[#2c3e50] text-white py-2 px-3 rounded-lg mb-6 w-3/4">
+            <option value="">Select a School</option>
+            <option value="Branch 1">Pratap Nagar Jaipur</option>
+            <option value="Branch 2">Jawahar Nagar Jaipur</option>
+            <option value="Branch 3">Tilak Nagar Jaipur</option>
+            <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+            <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+        </select>
+        <a href="teacherdash.html" class="w-full text-center py-2 px-4 hover:bg-gray-700 rounded-lg mb-2">Dashboard</a>
+        <a href="teacherstudentpage.html" class="w-full text-center py-2 px-4 hover:bg-gray-700 rounded-lg mb-2">Students</a>
+        <a href="teacherassigment.html" class="w-full text-center py-2 px-4 hover:bg-gray-700 rounded-lg mb-2">Assignments</a>
+        <a href="tStudentDetails.html" class="w-full text-center py-2 px-4 hover:bg-gray-700 rounded-lg mb-2">Examination</a>
+        <a href="profile.html" class="w-full text-center py-2 px-4 hover:bg-gray-700 rounded-lg mb-2">Profile</a>
+        <a href="feedbackformteacher.html" class="w-full text-center py-2 px-4 bg-blue-500 rounded-lg mb-2">Feedback</a>
+        <a href="login.html" onclick="return confirm('Are you sure you want to logout?')" 
+            class="w-full text-center py-2 px-4 hover:bg-red-600 rounded-lg mb-2">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex justify-center items-center min-h-screen ml-60 p-6">
+        <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg transition-all transform hover:scale-105">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Teacher Feedback Form</h2>
+
+            <form id="feedbackForm" class="space-y-4">
+                <div>
+                    <label for="teacherName" class="block text-gray-600 font-medium">Teacher Name</label>
+                    <input type="text" id="teacherName" name="teacherName" required 
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400">
+                </div>
+
+                <div>
+                    <label for="studentName" class="block text-gray-600 font-medium">Student Name</label>
+                    <input type="text" id="studentName" name="studentName" required 
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400">
+                </div>
+
+                <div>
+                    <label for="subject" class="block text-gray-600 font-medium">Subject</label>
+                    <input type="text" id="subject" name="subject" required 
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400">
+                </div>
+
+                <div>
+                    <label for="feedback" class="block text-gray-600 font-medium">Feedback</label>
+                    <textarea id="feedback" name="feedback" required rows="4" 
+                        class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400"></textarea>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-700">
+                    Submit Feedback
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const teacherName = document.getElementById("teacherName").value;
+            const studentName = document.getElementById("studentName").value;
+            const subject = document.getElementById("subject").value;
+            const feedback = document.getElementById("feedback").value;
+
+            const response = await fetch("http://localhost:5000/submit-feedback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ teacherName, studentName, subject, feedback })
+            });
+
+            if (response.ok) {
+                alert("Feedback submitted successfully!");
+                this.reset();
+            } else {
+                alert("Error submitting feedback.");
+            }
+        });
+        function openSchoolDashboard() {
+            const selectedSchool = document.getElementById('schoolDropdown').value;
+            if (selectedSchool) {
+                alert('Selected school: ' + selectedSchool);
+            }
+        }
+    </script>
+
+</body>
+</html>

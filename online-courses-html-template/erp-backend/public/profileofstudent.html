@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- School Header with Logo and Contact Information -->
+    <div class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Left Side: Logo and School Name -->
+            <div class="flex items-center space-x-4">
+                <img src="img/logo mps.jpg" alt="MPS School Logo" class="h-16">
+                <div class="text-center text-gray-600">
+                    <h1 class="text-xl font-semibold text-gray-800">Maheshwari Public School</h1>
+                    <p class="text-left">Affiliated to CBSE, Delhi</p>
+                </div>
+            </div>
+            <!-- Right Side: School Contact Info -->
+            <div class="text-right">
+                <p class="text-sm text-gray-600">Email: mpskijaipur@gmail.com</p>
+                <p class="text-sm text-gray-600">Contact: +91 9876543210, +91 7412949000</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Profile Section -->
+    <div class="container mx-auto p-6">
+        <!-- Profile Card -->
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Aadhya Kapoor</h2>
+                <div class="flex justify-center">
+                    <div class="w-1/4">
+                        <img src="img/student1.jpg" alt="Student Photo" class="rounded-full">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Basic Info -->
+            <div class="mt-6">
+                <h3 class="text-2xl font-semibold text-gray-800">Basic Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <p class="text-gray-600"><strong>Name:</strong> Aadhya Kapoor</p>
+                        <p class="text-gray-600"><strong>Class:</strong> 8th Standard</p>
+                        <p class="text-gray-600"><strong>Date of Birth:</strong> 01/01/2004</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-right"><strong>Father's Name:</strong> Mr. Harshit Kapoor</p>
+                        <p class="text-gray-600 text-right"><strong>Mother's Name:</strong> Mrs. Shrishti Kapoor</p>
+                        <p class="text-gray-600 text-right"><strong>Contact No:</strong> +91 8107594625</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment Submission -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold text-gray-800">Assignment Submissions</h3>
+                <table class="min-w-full mt-4 table-auto border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border text-left">Assignment Title</th>
+                            <th class="py-2 px-4 border text-left">Submission Date</th>
+                            <th class="py-2 px-4 border text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border">Maths Assignment 1</td>
+                            <td class="py-2 px-4 border">2025-01-20</td>
+                            <td class="py-2 px-4 border">Submitted</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border">English Essay</td>
+                            <td class="py-2 px-4 border">2025-01-22</td>
+                            <td class="py-2 px-4 border">Not Submitted</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border">EVS Project</td>
+                            <td class="py-2 px-4 border">2025-01-25</td>
+                            <td class="py-2 px-4 border">Submitted</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Fees Payment History -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold text-gray-800">Fees Payment History</h3>
+                <table class="min-w-full mt-4 table-auto border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border text-left">Payment Date</th>
+                            <th class="py-2 px-4 border text-left">Amount</th>
+                            <th class="py-2 px-4 border text-left">Status</th>
+                            <th class="py-2 px-4 border text-left">Receipt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border">2025-01-15</td>
+                            <td class="py-2 px-4 border">₹45000</td>
+                            <td class="py-2 px-4 border">Paid</td>
+                            <td class="py-2 px-4 border">
+                                <a href="#" class="text-blue-500 hover:text-blue-700" onclick="downloadReceipt('receipt1')">Download Receipt</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border">2025-12-15</td>
+                            <td class="py-2 px-4 border">₹35000</td>
+                            <td class="py-2 px-4 border">Pending</td>
+                            <td class="py-2 px-4 border">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold text-gray-800">Additional Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <p class="text-gray-600"><strong>Gender:</strong> Female</p>
+                        <p class="text-gray-600"><strong>Email:</strong> vidhi.kapoor@gmail.com</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-right"><strong>Address:</strong> 123 Street, City, State, ZIP</p>
+                        <p class="text-gray-600 text-right"><strong>Emergency Contact:</strong> +91 9876543210</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <!-- All Rights Reserved -->
+        <div class="text-center mt-4 text-sm text-gray-400">&copy; 2025 MPS School. All rights reserved.</div>
+    </footer>
+
+    <!-- JavaScript for handling receipt download -->
+    <script>
+        function downloadReceipt(receiptId) {
+            const receipts = {
+                "receipt1": {
+                    url: "file:///C:/Users/vidhi%20jain/Downloads/school_receipt%20(12).pdf"
+                }
+            };
+
+            const receipt = receipts[receiptId];
+            if (receipt) {
+                const link = document.createElement('a');
+                link.href = receipt.url;
+                link.download = `Receipt_${receiptId}.pdf`;
+                link.click();
+            } else {
+                alert("Receipt not found.");
+            }
+        }
+    </script>
+</body>
+</html>

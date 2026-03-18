@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam grade</title>
+    <link rel="stylesheet" href="admindashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+       
+      /* Main content styling */
+      .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            overflow-y: auto;
+            width: calc(100% - 270px);
+            height: 100vh;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        h1 {
+            color: #2C3E50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Class selector */
+        .class-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .class-selector select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            background-color: #3498DB;
+            color: white;
+            border: none;
+        }
+
+        /* Student Table Styling */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #3498DB;
+            color: #fff;
+        }
+
+        table td {
+            background-color: #ECF0F1;
+        }
+
+        table tr:nth-child(even) td {
+            background-color: #BDC3C7;
+        }
+
+        table tr:hover td {
+            background-color: #D5DBDB;
+        }
+
+        /* Edit Form Styling */
+        .edit-form {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            z-index: 999;
+        }
+
+        .edit-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .edit-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .edit-form button:hover {
+            background-color: #2980B9;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+       
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Class-wise Student Information</h1>
+        
+        <!-- Class Selector -->
+        <div class="class-selector">
+            <select id="classSelector" onchange="filterClassData()">
+                <option value="">Select a Class</option>
+                <option value="1">Class 1</option>
+                <option value="2">Class 2</option>
+                <option value="3">Class 3</option>
+                <option value="4">Class 4</option>
+                <option value="5">Class 5</option>
+            </select>
+        </div>
+
+        <!-- Student Table -->
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic Student Data Here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="edit-form" id="editForm">
+        <span class="close-btn" onclick="closeEditForm()">×</span>
+        <h3>Edit Student Info</h3>
+        <input type="text" id="editName" placeholder="Student Name">
+        <input type="text" id="editGrade" placeholder="Grade">
+        <button onclick="saveChanges()">Save Changes</button>
+    </div>
+
+    <script>
+        const studentData = {
+            1: [
+                { id: 101, name: "John Doe", class: "Class 1", grade: "A" },
+                { id: 102, name: "Jane Smith", class: "Class 1", grade: "B+" }
+            ],
+            2: [
+                { id: 201, name: "Mary Johnson", class: "Class 2", grade: "A-" },
+                { id: 202, name: "James Brown", class: "Class 2", grade: "B" }
+            ],
+            3: [
+                { id: 301, name: "Emily Clark", class: "Class 3", grade: "A" },
+                { id: 302, name: "Michael Lee", class: "Class 3", grade: "B+" }
+            ],
+            4: [
+                { id: 401, name: "Sophia Williams", class: "Class 4", grade: "A" },
+                { id: 402, name: "David White", class: "Class 4", grade: "B" }
+            ],
+            5: [
+                { id: 501, name: "Isabella Walker", class: "Class 5", grade: "A+" },
+                { id: 502, name: "Liam Harris", class: "Class 5", grade: "B+" }
+            ]
+        };
+
+        let editingStudent = null;
+
+        // Load data from localStorage on page load
+        window.onload = function() {
+            if (localStorage.getItem('students')) {
+                Object.assign(studentData, JSON.parse(localStorage.getItem('students')));
+            }
+            filterClassData();
+        };
+
+        // Function to filter and display student data based on selected class
+        function filterClassData() {
+            const classValue = document.getElementById("classSelector").value;
+            const tableBody = document.querySelector("#studentTable tbody");
+
+            tableBody.innerHTML = "";
+
+            if (classValue) {
+                const students = studentData[classValue];
+                students.forEach(student => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>${student.class}</td>
+                        <td>${student.grade}</td>
+                        <td><button onclick="editStudent(${student.id})">Edit</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="5">Please select a class to view student details.</td></tr>`;
+            }
+        }
+
+        // Edit student function
+        function editStudent(id) {
+            editingStudent = id;
+            const student = findStudentById(id);
+            document.getElementById("editName").value = student.name;
+            document.getElementById("editGrade").value = student.grade;
+            document.getElementById("editForm").style.display = "block";
+        }
+
+        // Save changes function
+        function saveChanges() {
+            const name = document.getElementById("editName").value;
+            const grade = document.getElementById("editGrade").value;
+
+            const student = findStudentById(editingStudent);
+            student.name = name;
+            student.grade = grade;
+
+            // Save updated data to localStorage
+            localStorage.setItem('students', JSON.stringify(studentData));
+
+            // Close the edit form and refresh the table
+            closeEditForm();
+            filterClassData();
+        }
+
+        // Close the edit form
+        function closeEditForm() {
+            document.getElementById("editForm").style.display = "none";
+        }
+
+        // Find a student by their ID
+        function findStudentById(id) {
+            for (let classId in studentData) {
+                const student = studentData[classId].find(student => student.id === id);
+                if (student) return student;
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>

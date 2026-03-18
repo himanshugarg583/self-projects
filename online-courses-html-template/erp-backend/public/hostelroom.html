@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel room Details</title>
+    <link rel="stylesheet" href="css/admindashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            display: flex;
+        }
+
+       
+
+        .content {
+            margin-left: 274px;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .hostel-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .card p {
+            margin: 10px 0;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .card .availability {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card .status {
+            color: #4CAF50;
+        }
+
+        .card .status.full {
+            color: #d9534f;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="content">
+        <h1 class="title">Hostel Room Types</h1>
+
+        <div class="hostel-card-container" id="cardContainer">
+            <!-- Cards will be dynamically loaded -->
+        </div>
+    </div>
+
+    <script>
+        // Initial data for the cards
+        const defaultData = [
+            {
+                id: 1,
+                title: "Single Room",
+                capacity: "1 person",
+                facilities: "Attached Bathroom, AC, Wi-Fi",
+                rent: "₹10,000",
+                totalRooms: 10,
+                occupiedRooms: 7,
+                status: "Available",
+            },
+            {
+                id: 2,
+                title: "Double Room",
+                capacity: "2 persons",
+                facilities: "Attached Bathroom, Fan, Wi-Fi",
+                rent: "₹8,000",
+                totalRooms: 20,
+                occupiedRooms: 15,
+                status: "Available",
+            },
+            {
+                id: 3,
+                title: "Triple Room",
+                capacity: "3 persons",
+                facilities: "Fan, Shared Bathroom, Wi-Fi",
+                rent: "₹6,000",
+                totalRooms: 15,
+                occupiedRooms: 12,
+                status: "Available",
+            },
+            {
+                id: 4,
+                title: "Dormitory",
+                capacity: "4 persons",
+                facilities: "Shared Bathroom, Fan, Wi-Fi",
+                rent: "₹4,000",
+                totalRooms: 25,
+                occupiedRooms: 20,
+                status: "Available",
+            },
+        ];
+
+        // Load data from localStorage or set to defaultData
+        let roomData = JSON.parse(localStorage.getItem("roomData")) || defaultData;
+
+        // Function to save data to localStorage
+        function saveData() {
+            localStorage.setItem("roomData", JSON.stringify(roomData));
+        }
+
+        // Function to update room status based on availability
+        function updateStatus(room) {
+            room.status = room.occupiedRooms >= room.totalRooms ? "Full" : "Available";
+        }
+
+        // Function to render cards
+        function renderCards() {
+            const container = document.getElementById("cardContainer");
+            container.innerHTML = ""; // Clear existing cards
+
+            roomData.forEach((room) => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `
+                    <button class="edit-button" onclick="editCard(${room.id}, this)">Edit</button>
+                    <h3 contenteditable="false">${room.title}</h3>
+                    <p contenteditable="false">Capacity: ${room.capacity}</p>
+                    <p contenteditable="false">Facilities: ${room.facilities}</p>
+                    <p contenteditable="false">Monthly Rent: ${room.rent}</p>
+                    <p class="availability" contenteditable="false">Total Rooms: ${room.totalRooms}</p>
+                    <p class="availability" contenteditable="false">Occupied Rooms: ${room.occupiedRooms}</p>
+                    <p class="status ${room.status === "Full" ? "full" : ""}">Status: <span>${room.status}</span></p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Function to edit a card
+        function editCard(id, button) {
+            const card = button.closest(".card");
+            const isEditable = button.innerText === "Edit";
+
+            // Toggle edit mode
+            card.querySelectorAll("[contenteditable]").forEach((el) => {
+                el.contentEditable = isEditable;
+                el.style.border = isEditable ? "1px dashed #ccc" : "none";
+            });
+
+            // Update button text
+            button.innerText = isEditable ? "Save" : "Edit";
+
+            // Save changes
+            if (!isEditable) {
+                const room = roomData.find((r) => r.id === id);
+                room.title = card.querySelector("h3").innerText;
+                room.capacity = card.querySelector("p:nth-child(3)").innerText.split(": ")[1];
+                room.facilities = card.querySelector("p:nth-child(4)").innerText.split(": ")[1];
+                room.rent = card.querySelector("p:nth-child(5)").innerText.split(": ")[1];
+                room.totalRooms = parseInt(card.querySelector(".availability:nth-child(6)").innerText.split(": ")[1]);
+                room.occupiedRooms = parseInt(card.querySelector(".availability:nth-child(7)").innerText.split(": ")[1]);
+
+                // Automatically update status
+                updateStatus(room);
+
+                saveData(); // Save updated data to localStorage
+                renderCards(); // Re-render the cards to reflect changes
+            }
+        }
+
+        // Render cards on page load
+        renderCards();
+    </script>
+</body>
+
+</html>

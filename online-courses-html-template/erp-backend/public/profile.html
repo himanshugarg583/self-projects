@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 240px;
+            padding: 20px;
+            background-color: #f4f4f9;
+            min-height: 100vh;
+        }
+
+        .student-card {
+            background-color: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .student-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .student-card .card-image {
+            width: 100%;
+            height: 150px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .student-card p {
+            font-weight: bold;
+        }
+
+        .student-card button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .student-card button:hover {
+            background-color: #45a049;
+        }
+
+       /* Achievement Graph Styling */
+       #achievementChart, #revenueChart {
+            width: 150px; /* Smaller width */
+            height: 100px; /* Smaller height */
+        }
+
+        /* Container for two graphs */
+        .graphs-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        /* Center the graphs inside each container */
+        .graph-container {
+            flex: 1;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+       /* Responsive Styling */
+       @media (max-width: 1024px) {
+
+            .main-content {
+                margin-left: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .main-content {
+                margin-left: 180px;
+            }
+
+            .student-card {
+                padding: 15px;
+            }
+
+            .graphs-container {
+                flex-direction: column;
+            }
+
+            .graph-container {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+           
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar a {
+                font-size: 0.9rem;
+            }
+
+            .student-card {
+                padding: 10px;
+            }
+
+            .student-card h1 {
+                font-size: 1.5rem;
+            }
+
+            .graphs-container {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .graph-container {
+                margin-bottom: 20px;
+            }
+
+            #achievementChart, #revenueChart {
+                height: 150px; /* Smaller height for mobile */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Sidebar -->
+    <div class="fixed w-60 text-white h-screen flex flex-col items-center py-6 bg-[#2c3e50]">
+        <img src="img/logo mps.jpg" alt="MPS Logo" class="w-16 h-16 rounded-full mb-4">
+        <h2 class="text-lg mb-6">Maheshwari Public School</h2>
+        <select id="schoolDropdown" onchange="openSchoolDashboard()" class="bg-[#2c3e50] text-white py-2 px-3 rounded-lg mb-6 w-3/4">
+            <option value="">Select a School</option>
+            <option value="Branch 1">Pratap Nagar Jaipur</option>
+            <option value="Branch 2">Jawahar Nagar Jaipur</option>
+            <option value="Branch 3">Tilak Nagar Jaipur</option>
+            <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+            <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+        </select>
+        <a href="teacherdash.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Dashboard</a>
+        <a href="teacherstudentpage.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Students</a>
+        <a href="teacherassigment.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Assignments</a>
+        <a href="tStudentDetails.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Examination</a>
+        <a href="profile.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Profile</a>
+        <a href="feedbackformteacher.html" class="w-full text-center py-2 px-4 bg-blue-500 rounded-lg mb-2">Feedback</a>
+        <a href="login.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Logout</a>
+    </div>
+    
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Profile Container -->
+        <div class="student-card">
+            <!-- Teacher Profile Header -->
+            <div class="flex items-center space-x-6">
+                <img src="img/teacher1.jpg" alt="Profile Picture" class="rounded-full w-32 h-32 object-cover">
+                <div>
+                    <h1 class="text-3xl font-semibold text-gray-800">Kirti Agrawal</h1>
+                    <p class="text-gray-600">Computer Science Teacher</p>
+                    <p class="text-gray-600">10 Years of Experience</p>
+                    <p class="text-gray-600">Teaches: Class 5,6,7,8</p>
+                </div>
+            </div>
+
+            <!-- Personal Details Section -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+                    <h2 class="font-semibold text-xl text-gray-800">Personal Details</h2>
+                    <ul class="space-y-2 mt-4">
+                        <li><strong>Age:</strong> 38</li>
+                        <li><strong>Date of Birth:</strong> 01/01/1987</li>
+                        <li><strong>Gender:</strong> Female</li>
+                        <li><strong>Contact No:</strong> +91-8107594200</li>
+                        <li><strong>Email:</strong> kirti.agrawal@gmail.com</li>
+                    </ul>
+                </div>
+
+                <!-- Qualification Section -->
+                <div class="bg-green-100 p-4 rounded-lg shadow-md">
+                    <h2 class="font-semibold text-xl text-gray-800">Qualification</h2>
+                    <ul class="space-y-2 mt-4">
+                        <li><strong>Bachelor's Degree:</strong> B.Sc. Computer Science</li>
+                        <li><strong>Master's Degree:</strong> M.SC Computer Science</li>
+                        <li><strong>University:</strong> XYZ University</li>
+                        <li><strong>Year of Graduation:</strong> 2010 (B.Sc.), 2014 (M.SC.)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Teaching Experience Section -->
+            <div class="mt-6 bg-yellow-100 p-4 rounded-lg shadow-md">
+                <h2 class="font-semibold text-xl text-gray-800">Teaching Experience</h2>
+                <ul class="space-y-2 mt-4">
+                    <li><strong>10 Years of Experience</strong> in teaching Computer subjects</li>
+                    <li><strong>Subjects Taught:</strong> Data Structures, Algorithms, Web Development, Computer</li>
+                    <li><strong>Current Role:</strong> Senior Teacher at Maheshwari Public School</li>
+                </ul>
+            </div>
+
+            <!-- Achievement Graph Section -->
+            <div class="mt-6 mb-4">
+                <label for="yearSelector" class="font-semibold text-xl text-gray-800">Select Year:</label>
+                <select id="yearSelector" onchange="updateGraphs()">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+            </div>
+
+            <!-- Achievement and Revenue Graph Section -->
+            <div class="graphs-container mt-6">
+                <!-- First Graph -->
+                <div class="graph-container">
+                    <h2 class="font-semibold text-xl text-gray-800">Achievements</h2>
+                    <canvas id="achievementChart"></canvas>
+                </div>
+                
+                <!-- Revenue Graph (Second Graph) -->
+                <div class="graph-container">
+                    <h2 class="font-semibold text-xl text-gray-800">Teacher Salary</h2>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let achievementData = {
+            2024: [80, 70, 60],
+            2025: [85, 75, 65],
+            2026: [90, 80, 70]
+        };
+         // Default data for 2024, 2025, and 2026 including all months (January to December)
+    let revenueData = {
+        2024: [50000, 55000, 60000, 58000, 62000, 67000, 70000, 75000, 76000, 78000, 79000, 80000], // Indian salary in INR for all months
+        2025: [52000, 57000, 62000, 60000, 65000, 69000, 71000, 76000, 77000, 79000, 80000, 81000],
+        2026: [54000, 59000, 64000, 62000, 67000, 71000, 73000, 78000, 79000, 81000, 82000, 83000]
+    };
+    const ctx1 = document.getElementById('achievementChart').getContext('2d');
+        let achievementChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Student Success', 'Positive Feedback', 'Course Completion'],
+                datasets: [{
+                    label: 'Achievements (%)',
+                    data: achievementData[2024], // Default to 2024 data
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+    // Labels for each month from January to December
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    // Line chart for teacher salary (Revenue Chart)
+    const ctx2 = document.getElementById('revenueChart').getContext('2d');
+    let revenueChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: months, // Updated to show all months
+            datasets: [{
+                label: 'Salary (INR)',
+                data: revenueData[2024], // Default to 2024 data
+                borderColor: 'rgba(46, 204, 113, 1)',
+                backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            }
+        }
+    });
+
+    // Update both charts when the year is selected
+    function updateGraphs() {
+        const selectedYear = document.getElementById('yearSelector').value;
+        
+        // Update Achievement Chart
+        achievementChart.data.datasets[0].data = achievementData[selectedYear];
+        achievementChart.update();
+
+        // Update Revenue Chart with new data (12 months)
+        revenueChart.data.datasets[0].data = revenueData[selectedYear];
+        revenueChart.update();
+    }
+        document.addEventListener('DOMContentLoaded', function () {
+            const authDropdown = document.getElementById('authentication');
+            const authLink = document.getElementById('authDropdown');
+            authDropdown.style.display = 'none';
+            authLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (authDropdown.style.display === 'none' || authDropdown.style.display === '') {
+                    authDropdown.style.display = 'block';
+                } else {
+                    authDropdown.style.display = 'none';
+                }
+            });
+        });
+
+        function openSchoolDashboard() {
+            const selectedSchool = document.getElementById('schoolDropdown').value;
+            if (selectedSchool) {
+                alert('Selected school: ' + selectedSchool);
+            }
+        }
+    </script>
+
+</body>
+</html>

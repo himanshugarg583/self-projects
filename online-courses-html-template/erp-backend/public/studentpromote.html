@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classwise Details</title>
+    <link rel="stylesheet" href="css/admindashboard.css">
+    <style>
+        
+/* Main Content */
+.content {
+            margin-left: 270px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #checkPromotionBtn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        #checkPromotionBtn:hover {
+            background-color: #2980b9;
+        }
+
+        .loading-message {
+            text-align: center;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        /* Class Cards Container */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* Increased the gap to give more space between cards */
+            justify-items: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 280px;
+            height: 350px;
+            perspective: 1000px;
+            margin-bottom: 20px; /* Added space below each card */
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.6s;
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+            background-color: #ecf0f1;
+        }
+
+        .card-front {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #b0dfff;
+            color: #fff;
+        }
+
+        .card-front h3, .card-back h3 {
+            margin: 0;
+        }
+
+        .highlight {
+            color: #e74c3c;
+        }
+
+        .card-back p {
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="#">Teacher Dashboard</a></li>
+                    <li><a href="#">Student Dashboard</a></li>
+                    <li><a href="#">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+       
+        <li><a href="classroom.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <header class="header">
+            <h1>Class-Wise Student Promotion</h1>
+            <button id="checkPromotionBtn">Check Promotion Status</button>
+        </header>
+
+        <section id="loadingMessage" class="loading-message">
+            <p>Click the button to check promotion status</p>
+        </section>
+
+        <section class="card-container" id="cardContainer">
+            <!-- Class Cards will appear here after clicking the button -->
+        </section>
+    </div>
+
+    <script>
+        let classes = [
+            { grade: "1st Grade", totalStudents: 30, passed: 28, failed: 2 },
+            { grade: "2nd Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "3rd Grade", totalStudents: 30, passed: 25, failed: 5 },
+            { grade: "4th Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "5th Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "6th Grade", totalStudents: 30, passed: 28, failed: 2 },
+            { grade: "7th Grade", totalStudents: 30, passed: 29, failed: 1 },
+            { grade: "8th Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "9th Grade", totalStudents: 30, passed: 29, failed: 1 },
+            { grade: "10th Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "11th Grade", totalStudents: 30, passed: 30, failed: 0 },
+            { grade: "12th Grade", totalStudents: 30, passed: 28, failed: 2 }
+        ];
+
+        function renderClassCards() {
+            const cardContainer = document.getElementById("cardContainer");
+            cardContainer.innerHTML = ""; // Clear existing cards
+
+            classes.forEach((classItem) => {
+                const card = document.createElement("div");
+                card.className = "card";
+
+                const promotionMessage = classItem.failed === 0 
+                    ? "All students promoted to the next class" 
+                    : `${classItem.failed} student(s) failed, others promoted`;
+
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h3>${classItem.grade}</h3>
+                            <p>Total Students: <span class="highlight">${classItem.totalStudents}</span></p>
+                            <p>Promoted: <span class="highlight">${classItem.passed}</span></p>
+                            <p>Failed: <span class="highlight">${classItem.failed}</span></p>
+                        </div>
+                        <div class="card-back">
+                            <h3>Promotion Status</h3>
+                            <p>${promotionMessage}</p>
+                        </div>
+                    </div>
+                `;
+
+                cardContainer.appendChild(card);
+            });
+        }
+
+        document.getElementById("checkPromotionBtn").addEventListener("click", function() {
+            // Hide the loading message and show the class cards
+            document.getElementById("loadingMessage").style.display = "none";
+            renderClassCards();
+        });
+    </script>
+</body>
+</html>

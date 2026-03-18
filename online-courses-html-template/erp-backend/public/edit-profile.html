@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Teacher Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            background-color: #fafafa;
+            border: 2px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-section:hover {
+            border-color: #4CAF50;
+            transform: scale(1.02);
+        }
+
+        .section-header {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .file-upload {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 320px;
+            max-width: 48%;
+        }
+
+        .col-full {
+            flex: 1;
+            min-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .col {
+                max-width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2> Teacher Details</h2>
+    <form id="teacherForm">
+        <div class="row">
+            <!-- Personal Details -->
+            <div class="col">
+                <div class="form-section">
+                    <div class="section-header">Personal Details</div>
+
+                    <div class="form-group">
+                        <label for="profilePic">Profile Picture</label>
+                        <input type="file" id="profilePic" class="file-upload" onchange="saveData('profilePic', this.files[0] ? this.files[0].name : '')">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacherID">Teacher ID</label>
+                        <input type="text" id="teacherID" placeholder="Enter Teacher ID" onchange="saveData('teacherID', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Enter Name" onchange="saveData('name', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="class">Class</label>
+                        <input type="text" id="class" placeholder="Enter Class" onchange="saveData('class', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="Enter Subject" onchange="saveData('subject', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" onchange="saveData('gender', this.value)">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Information</label>
+                        <input type="text" id="contact" placeholder="Enter Contact Info" onchange="saveData('contact', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational and Professional Details -->
+            <div class="col">
+                <div class="form-section">
+                    <div class="section-header">Educational and Professional Details</div>
+
+                    <div class="form-group">
+                        <label for="qualification">Qualification</label>
+                        <input type="text" id="qualification" placeholder="Enter Qualification" onchange="saveData('qualification', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="workExperience">Work Experience</label>
+                        <textarea id="workExperience" placeholder="Enter Work Experience" onchange="saveData('workExperience', this.value)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="previousEmployment">Previous Employment</label>
+                        <textarea id="previousEmployment" placeholder="Enter Previous Employment" onchange="saveData('previousEmployment', this.value)"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">Payroll Details</div>
+
+                    <div class="form-group">
+                        <label for="epfNumber">EPF Number</label>
+                        <input type="text" id="epfNumber" placeholder="Enter EPF Number" onchange="saveData('epfNumber', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="basicSalary">Basic Salary</label>
+                        <input type="number" id="basicSalary" placeholder="Enter Basic Salary" onchange="saveData('basicSalary', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contractType">Contract Type</label>
+                        <input type="text" id="contractType" placeholder="Enter Contract Type" onchange="saveData('contractType', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="workShift">Work Shift</label>
+                        <input type="text" id="workShift" placeholder="Enter Work Shift" onchange="saveData('workShift', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="Enter Location" onchange="saveData('location', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateLeaving">Date of Leaving</label>
+                        <input type="date" id="dateLeaving" onchange="saveData('dateLeaving', this.value)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Leaves Section -->
+            <div class="col">
+                <div class="form-section">
+                    <div class="section-header">Leaves</div>
+
+                    <div class="form-group">
+                        <label for="medicalLeaves">Medical Leaves</label>
+                        <input type="number" id="medicalLeaves" placeholder="Enter Number of Medical Leaves" onchange="saveData('medicalLeaves', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="casualLeaves">Casual Leaves</label>
+                        <input type="number" id="casualLeaves" placeholder="Enter Number of Casual Leaves" onchange="saveData('casualLeaves', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maternityLeaves">Maternity Leaves</label>
+                        <input type="number" id="maternityLeaves" placeholder="Enter Number of Maternity Leaves" onchange="saveData('maternityLeaves', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sickLeaves">Sick Leaves</label>
+                        <input type="number" id="sickLeaves" placeholder="Enter Number of Sick Leaves" onchange="saveData('sickLeaves', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Account Details -->
+            <div class="col">
+                <div class="form-section">
+                    <div class="section-header">Bank Account Details</div>
+
+                    <div class="form-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" id="accountName" placeholder="Enter Account Name" onchange="saveData('accountName', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber" placeholder="Enter Account Number" onchange="saveData('accountNumber', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bankName">Bank Name</label>
+                        <input type="text" id="bankName" placeholder="Enter Bank Name" onchange="saveData('bankName', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ifscCode">IFSC Code</label>
+                        <input type="text" id="ifscCode" placeholder="Enter IFSC Code" onchange="saveData('ifscCode', this.value)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="branchDetails">Branch Details</label>
+                        <input type="text" id="branchDetails" placeholder="Enter Branch Details" onchange="saveData('branchDetails', this.value)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Documents and Password Section -->
+            <div class="col-full">
+                <div class="form-section">
+                    <div class="section-header">Documents</div>
+
+                    <div class="form-group">
+                        <label for="resume">Resume</label>
+                        <input type="file" id="resume" class="file-upload" onchange="saveData('resume', this.files[0] ? this.files[0].name : '')">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="joiningLetter">Joining Letter</label>
+                        <input type="file" id="joiningLetter" class="file-upload" onchange="saveData('joiningLetter', this.files[0] ? this.files[0].name : '')">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">Password</div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter Password" onchange="saveData('password', this.value)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" onclick="saveAllData()"><a href="teacherdash.html"> Save Details</a></button>
+    </form>
+</div>
+
+<script>
+    // Function to save form data to localStorage
+    function saveData(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    // Function to load form data from localStorage
+    function loadData() {
+        const keys = [
+            'profilePic', 'teacherID', 'name', 'class', 'subject', 'gender', 'contact',
+            'qualification', 'workExperience', 'previousEmployment', 'epfNumber', 'basicSalary',
+            'contractType', 'workShift', 'location', 'dateLeaving', 'medicalLeaves', 'casualLeaves',
+            'maternityLeaves', 'sickLeaves', 'accountName', 'accountNumber', 'bankName', 'ifscCode',
+            'branchDetails', 'resume', 'joiningLetter', 'password'
+        ];
+
+        keys.forEach(key => {
+            const value = localStorage.getItem(key);
+            if (value) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.type === 'file') {
+                        // For file input, just display file name
+                        element.previousElementSibling.innerText = value || 'No file selected';
+                    } else {
+                        element.value = value;
+                    }
+                }
+            }
+        });
+    }
+
+    // Function to save all data at once
+    function saveAllData() {
+        alert("Teacher details saved!");
+    }
+
+    // Load data when the page is loaded
+    window.onload = loadData;
+</script>
+
+</body>
+</html>

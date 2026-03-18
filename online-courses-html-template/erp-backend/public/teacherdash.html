@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Sidebar -->
+    <div class="fixed w-60 text-white h-screen flex flex-col items-center py-6 bg-[#2c3e50]">
+        <img src="img/logo mps.jpg" alt="MPS Logo" class="w-16 h-16 rounded-full mb-4">
+        <h2 class="text-lg mb-6">Maheshwari Public School</h2>
+        <select id="schoolDropdown" onchange="openSchoolDashboard()" class="bg-[#2c3e50] text-white py-2 px-3 rounded-lg mb-6 w-3/4">
+            <option value="">Select a School</option>
+            <option value="Branch 1">Pratap Nagar Jaipur</option>
+            <option value="Branch 2">Jawahar Nagar Jaipur</option>
+            <option value="Branch 3">Tilak Nagar Jaipur</option>
+            <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+            <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+        </select>
+        <a href="teacherdash.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Dashboard</a>
+        <a href="teacherstudentpage.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Students</a>
+        <a href="teacherassigment.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Assignments</a>
+        <a href="tStudentDetails.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Examination</a>
+        <a href="profile.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Profile</a>
+        <a href="feedbackformteacher.html" class="w-full text-center py-2 px-4 bg-blue-500 rounded-lg mb-2">Feedback</a>
+        <a href="login.html" 
+        onclick="return confirm('Are you sure you want to logout?')" 
+        class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">
+         Logout
+     </a>
+     
+    </div>
+    
+    
+    <!-- Main content -->
+    <div class="ml-60 p-8">
+        <div class="mb-8 text-center text-xl">
+            Welcome, <strong>Kirti Agarwal</strong>!
+        </div>
+        
+        <!-- Profile Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="img/teacher1.jpg" alt="Teacher Profile Picture" class="w-24 h-24 rounded-full mx-auto mb-4">
+                <h5 class="text-xl text-center">Kirti Agarwal</h5>
+                <p class="text-center">Email: kirti@gmail.com</p>
+                <button onclick="openEditPage()" class="w-full py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Edit Profile</button>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h5 class="text-xl">Calendar</h5>
+                <iframe src="https://calendar.google.com/calendar/embed" class="w-full h-72 border-0 mt-4"></iframe>
+            </div>
+
+            <!-- Attendance Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h5 class="text-xl">Attendance</h5>
+                <div class="mb-4">
+                    <button id="presentButton" class="bg-green-500 text-white py-2 px-4 rounded-lg mr-4 hover:bg-green-600">Mark Present</button>
+                    <button id="absentButton" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Mark Absent</button>
+                </div>
+                <canvas id="attendanceChart" class="w-full h-72"></canvas>
+            </div>
+
+            <!-- Syllabus Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h5 class="text-xl">Syllabus</h5>
+                <label for="classDropdown" class="block mb-2">Select Class:</label>
+                <select id="classDropdown" class="w-full bg-gray-100 p-2 rounded-lg" onchange="updateSyllabus()">
+                    <option value="">--Select a class--</option>
+                    <option value="Class 5">Class 5</option>
+                    <option value="Class 6">Class 6</option>
+                    <option value="Class 7">Class 7</option>
+                    <option value="Class 8">Class 8</option>
+                </select>
+                <div id="syllabusContent" class="mt-4 text-gray-700">
+                    <p>Please select a class to view the syllabus.</p>
+                </div>
+            </div>
+
+            <!-- Weekly Timetable Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h5 class="text-xl">Weekly Timetable</h5>
+
+                <!-- Monday -->
+                <div class="mt-4">
+                    <h3 class="text-lg text-blue-600">Monday</h3>
+                    <ul>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 5A - Computer <span class="text-blue-600 font-semibold">9:00 AM - 10:00 AM</span></li>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 6B - Computer <span class="text-blue-600 font-semibold">11:00 AM - 12:00 PM</span></li>
+                    </ul>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="mt-4">
+                    <h3 class="text-lg text-blue-600">Wednesday</h3>
+                    <ul>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 7B - Computer <span class="text-blue-600 font-semibold">9:00 AM - 10:00 AM</span></li>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 8A - Computer <span class="text-blue-600 font-semibold">1:00 PM - 2:00 PM</span></li>
+                    </ul>
+                </div>
+
+                <!-- Friday -->
+                <div class="mt-4">
+                    <h3 class="text-lg text-blue-600">Friday</h3>
+                    <ul>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 8B - Computer <span class="text-blue-600 font-semibold">9:00 AM - 10:00 AM</span></li>
+                        <li class="bg-gray-100 p-3 rounded-lg mb-2">Class 7B - Computer <span class="text-blue-600 font-semibold">1:00 PM - 2:00 PM</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Leave Application Section -->
+            <div class="bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2 lg:col-span-3">
+                <h2 class="text-xl text-center">Apply for Leave</h2>
+                <form id="leaveForm">
+                    <label for="leaveType" class="block text-gray-700 mt-4">Leave Type:</label>
+                    <select id="leaveType" name="leaveType" class="w-full bg-gray-100 p-2 rounded-lg">
+                        <option value="">Select leave type</option>
+                        <option value="sick">Sick Leave</option>
+                        <option value="personal">Personal Leave</option>
+                        <option value="vacation">Vacation Leave</option>
+                    </select>
+
+                    <label for="leaveDate" class="block text-gray-700 mt-4">Leave Date:</label>
+                    <input type="date" id="leaveDate" name="leaveDate" class="w-full bg-gray-100 p-2 rounded-lg">
+
+                    <label for="reason" class="block text-gray-700 mt-4">Reason:</label>
+                    <textarea id="reason" name="reason" rows="4" class="w-full bg-gray-100 p-2 rounded-lg" placeholder="Provide a brief reason"></textarea>
+
+                    <button type="submit" class="w-full py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Submit Leave</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <!-- All Rights Reserved -->
+        <div class="text-center mt-4 text-sm text-gray-400">&copy; 2025 MPS School. All rights reserved.</div>
+    </footer> 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        
+        const dashboardContainer = document.getElementById('dashboardContainer');
+        function openEditPage() {
+    window.location.href = 'edit-profile.html';
+}
+function openSchoolDashboard() {
+            const selectedSchool = document.getElementById('schoolDropdown').value;
+            if (selectedSchool) {
+                alert('Selected school: ' + selectedSchool);
+            }
+        }
+
+
+    </script>
+
+    <script>
+        function updateSyllabus() {
+    const selectedClass = document.getElementById('classDropdown').value;
+    const syllabusContent = document.getElementById('syllabusContent');  // Fixed case sensitivity issue here
+    if (selectedClass === 'Class 5') {
+        syllabusContent.innerHTML = `
+            <ul class="syllabus-list">
+                <li>Chapter 1: Introduction to Computer</li>
+                <li>Chapter 2: Operating System Basics</li>
+                <li>Chapter 3:  Microsoft Office (Word, Paint)</li>
+                <li>Chapter 4: Internet and Email</li>
+                <li>Chapter 5: Safety and Security</li>
+            </ul>
+        `;
+    } else if (selectedClass === 'Class 6') {
+        syllabusContent.innerHTML = `
+            <ul class="syllabus-list">
+                <li>Chapter 1: Introduction to Computers</li>
+                <li>Chapter 2: Computer Hardware and Software</li>
+                <li>Chapter 3: Microsoft Office (Word and Excel)</li>
+                <li>Chapter 4: Internet and Communication</li>
+                <li>Chapter 5: Introduction to Programming</li>
+                <li>Chapter 6: Cyber Safety</li>
+            </ul>
+        `;
+
+    } 
+    else if (selectedClass === 'Class 7') {
+        syllabusContent.innerHTML = `
+           
+            <ul class="syllabus-list">
+                <li>Chapter 1: Computer Fundamentals</li>
+                <li>Chapter 2: Advanced Microsoft Office</li>
+                <li>Chapter 3: ntroduction to Databases</li>
+                <li>Chapter 4: Internet and Communication</li>
+                <li>Chapter 5: Programming Concepts</li>
+                <li>Chapter 6: Cyber Security</li>
+            </ul>
+        `;
+
+    } 
+    else if (selectedClass === 'Class 8') {
+        syllabusContent.innerHTML = `
+            
+            <ul class="syllabus-list">
+                <li>Chapter 1:Computer Hardware and Software</li>
+                <li>Chapter 2: Advanced Microsoft Office</li>
+                <li>Chapter 3: Internet and Web Technologies</li>
+                <li>Chapter 4: Introduction to Programming</li>
+                <li>Chapter 5: Database Management</li>
+                <li>Chapter 6: Cyber Security and Online Ethics</li>
+            </ul>
+        `;
+    } else {
+        syllabusContent.innerHTML = `<h6>Please select a class to view the syllabus.</h6>`;
+    }
+}
+
+    </script>
+
+<script>
+    // Utility to format date as "YYYY-MM-DD"
+    function formatDate(date) {
+        return date.toISOString().split('T')[0];
+    }
+
+    // Initialize data
+    const currentDate = new Date();
+    const currentDayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' }); // e.g., Mon, Tue
+    const todayDate = formatDate(currentDate); // e.g., 2025-01-16
+
+    // Load stored data or initialize
+    let attendanceData = JSON.parse(localStorage.getItem('attendanceData')) || {};
+    let attendanceMarked = JSON.parse(localStorage.getItem('attendanceMarked')) || {};
+
+    // Initialize Chart.js
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(attendanceData), // Dates
+            datasets: [{
+                label: 'Attendance Count',
+                data: Object.values(attendanceData), // Counts
+                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Attendance Count'
+                    }
+                }
+            }
+        }
+    });
+
+    // Update the chart with new data
+    function updateChart() {
+        attendanceChart.data.labels = Object.keys(attendanceData);
+        attendanceChart.data.datasets[0].data = Object.values(attendanceData);
+        attendanceChart.update();
+        localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
+        localStorage.setItem('attendanceMarked', JSON.stringify(attendanceMarked));
+    }
+
+    // Handle Present button click
+    document.getElementById('presentButton').addEventListener('click', () => {
+        if (!attendanceMarked[todayDate]) { // Mark attendance for today only if not already marked
+            if (!attendanceData[todayDate]) {
+                attendanceData[todayDate] = 0; // Initialize if not present
+            }
+            attendanceData[todayDate]++; // Increment attendance for today
+            attendanceMarked[todayDate] = true; // Mark attendance as recorded for today
+            updateChart();
+            alert(`Attendance marked as PRESENT for ${currentDayName}, ${todayDate}`);
+        } else {
+            alert(`Attendance for ${currentDayName}, ${todayDate} is already marked.`);
+        }
+    });
+
+    // Handle Absent button click
+    document.getElementById('absentButton').addEventListener('click', () => {
+        if (!attendanceMarked[todayDate]) { // Mark attendance for today only if not already marked
+            if (!attendanceData[todayDate]) {
+                attendanceData[todayDate] = 0; // Initialize if not present
+            }
+            attendanceData[todayDate]--; // Decrement attendance for today
+            attendanceMarked[todayDate] = true; // Mark attendance as recorded for today
+            updateChart();
+            alert(`Attendance marked as ABSENT for ${currentDayName}, ${todayDate}`);
+        } else {
+            alert(`Attendance for ${currentDayName}, ${todayDate} is already marked.`);
+        }
+    });
+
+    // Load chart on page load
+    window.onload = () => {
+        updateChart();
+    };
+</script>
+<!-- <script>
+    // Sample leave data 
+    
+            const form = document.getElementById('leaveForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Leave application submitted successfully!');
+                form.reset();
+            });
+    
+    </script> -->
+    <script>
+        const form = document.getElementById('leaveForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            const leaveType = document.getElementById('leaveType').value;
+            const leaveDate = document.getElementById('leaveDate').value;
+            const reason = document.getElementById('reason').value;
+            const teacherId = 'teacher123'; // You can dynamically set this based on logged-in teacher
+    
+            const leaveRequestData = {
+                leaveType,
+                leaveDate,
+                reason,
+                teacherId
+            };
+    
+            try {
+                const response = await fetch('http://localhost:5000/api/leave-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(leaveRequestData)
+                });
+    
+                const data = await response.text();
+                alert(data);
+                form.reset();
+            } catch (error) {
+                alert('Failed to submit leave request');
+            }
+        });
+    </script>
+    
+
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

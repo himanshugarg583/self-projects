@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details</title>
+    <link rel="stylesheet" href="sd.css">  <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="css/admindashboard.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teachers List</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Classes</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">All Classes</a></li>
+                <li><a href="#">Schedule</a></li>
+            </ul>
+        </li>
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+       
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="main-content">
+        <h1>Staff Details</h1>
+    
+        <div class="staff-table-container">
+            <table class="staff-table">
+                <thead>
+                    <tr>
+                        <th>Staff Name</th>
+                        <th>Contact No</th>
+                        <th>Address</th>
+                        <th>ID Proof</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Staff Name">Mr. Ramesh Gupta</td>
+                        <td data-label="Contact No">+91 9876543210</td>
+                        <td data-label="Address">123 Street, Jaipur</td>
+                        <td data-label="ID Proof">
+                            <a href="aadhar_ramesh.pdf" target="_blank">View Document</a>
+                        </td>
+                        <td data-label="Actions">
+                            <button class="view-btn" onclick="viewStaffDetails('Ramesh Gupta', '+91 9876543210', '123 Street, Jaipur')">View Details</button>
+                            <button class="attendance-btn" onclick="markAttendance('Ramesh Gupta')">Mark Attendance</button>
+                        </td>
+                    </tr>
+                    <!-- Additional rows for other staff members -->
+                    <tr>
+                        <td data-label="Staff Name">Ms. Priya Sharma</td>
+                        <td data-label="Contact No">+91 9876543211</td>
+                        <td data-label="Address">456 Street, Udaipur</td>
+                        <td data-label="ID Proof">
+                            <a href="aadhar_priya.pdf" target="_blank">View Document</a>
+                        </td>
+                        <td data-label="Actions">
+                            <button class="view-btn" onclick="viewStaffDetails('Priya Sharma', '+91 9876543211', '456 Street, Udaipur')">View Details</button>
+                            <button class="attendance-btn" onclick="markAttendance('Priya Sharma')">Mark Attendance</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<!-- Modal for Viewing Staff Details -->
+<!-- Modal for Viewing Staff Details -->
+<div id="staffModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            Staff Details
+        </div>
+        <div class="modal-body">
+            <form id="staffDetailsForm">
+                <label for="staffName">Name</label>
+                <input type="text" id="staffName" placeholder="Enter Name" disabled>
+
+                <label for="staffAadhar">Aadhar Card</label>
+                <input type="text" id="staffAadhar" placeholder="Enter Aadhar Card Number">
+
+                <label for="staffContact">Contact No</label>
+                <input type="text" id="staffContact" placeholder="Enter Contact Number">
+
+                <label for="staffBankDetails">Bank Details</label>
+                <input type="text" id="staffBankDetails" placeholder="Enter Bank Details">
+
+                <label for="staffBranchName">Branch Name</label>
+                <input type="text" id="staffBranchName" placeholder="Enter Branch Name">
+
+                <label for="staffIFSC">IFSC Code</label>
+                <input type="text" id="staffIFSC" placeholder="Enter IFSC Code">
+
+                <label for="staffDOB">Date of Birth</label>
+                <input type="date" id="staffDOB">
+
+                <label for="staffGender">Gender</label>
+                <select id="staffGender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="staffMaritalStatus">Marital Status</label>
+                <select id="staffMaritalStatus">
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
+                    <option value="divorced">Divorced</option>
+                </select>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="close-btn" onclick="closeModal()">Close</button>
+            <button class="save-btn" onclick="saveStaffDetails()">Save</button>
+        </div>
+    </div>
+</div>
+
+       
+
+    <script>
+        // JavaScript to handle the dropdown toggle
+        document.querySelectorAll('.dropdown > a').forEach(item => {
+            item.addEventListener('click', function(event) {
+                const nextMenu = item.nextElementSibling;
+                if (nextMenu && nextMenu.classList.contains('dropdown-menu')) {
+                    event.preventDefault();
+                    nextMenu.classList.toggle('show');  // Toggle visibility
+                }
+            });
+        });
+
+
+        // Function to open the modal with staff details
+function viewStaffDetails(name) {
+    document.getElementById("staffName").value = name;
+    // Open the modal
+    document.getElementById("staffModal").style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById("staffModal").style.display = "none";
+}
+
+// Function to save the staff details (could be implemented to save data)
+function saveStaffDetails() {
+    const aadhar = document.getElementById("staffAadhar").value;
+    const contact = document.getElementById("staffContact").value;
+    const bankDetails = document.getElementById("staffBankDetails").value;
+    const branch = document.getElementById("staffBranchName").value;
+    const ifsc = document.getElementById("staffIFSC").value;
+    const dob = document.getElementById("staffDOB").value;
+    const gender = document.getElementById("staffGender").value;
+    const maritalStatus = document.getElementById("staffMaritalStatus").value;
+
+    // You can send this data to a backend or save it to a database
+
+    // For now, just alert the data (for testing purposes)
+    alert(`Staff Details saved:
+    Aadhar: ${aadhar}
+    Contact No: ${contact}
+    Bank Details: ${bankDetails}
+    Branch: ${branch}
+    IFSC: ${ifsc}
+    DOB: ${dob}
+    Gender: ${gender}
+    Marital Status: ${maritalStatus}`);
+
+    // Close the modal after saving
+    closeModal();
+}
+
+// Close the modal if the user clicks anywhere outside the modal
+window.onclick = function(event) {
+    if (event.target == document.getElementById("staffModal")) {
+        closeModal();
+    }
+}
+
+       
+    </script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>  <!-- FontAwesome for icons -->
+</body>
+</html>

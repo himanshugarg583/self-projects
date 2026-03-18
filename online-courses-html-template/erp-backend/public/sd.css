@@ -1,0 +1,311 @@
+/* General Styles for Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+/* Main Content */
+.main-content {
+    margin-left: 285px;
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+}
+
+.staff-table-container {
+    margin-top: 20px;
+}
+
+/* Form Styling Inside Modal */
+/* Form Styling Inside Modal */
+/* Ensure parent div is properly set */
+.form-container {
+    width: 100%;
+    max-width: 600px; /* To ensure the form doesn't stretch too wide */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form Container with Scrollbar */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    max-height: 500px; /* Set a fixed height for the form container */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    scrollbar-width: thin; /* For modern browsers */
+    scrollbar-color: #007bff #f1f1f1; /* Customize scrollbar colors */
+}
+
+/* Custom Scrollbar for Webkit Browsers */
+form::-webkit-scrollbar {
+    width: 8px; /* Width of scrollbar */
+}
+
+form::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 5px; /* Rounded edges */
+}
+
+form::-webkit-scrollbar-thumb {
+    background-color: #007bff; /* Scrollbar color */
+    border-radius: 5px; /* Rounded edges */
+    border: 2px solid #f1f1f1; /* Add space around the thumb */
+}
+
+form::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3; /* Change color on hover */
+}
+
+
+
+form label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+form input[type="text"],
+form input[type="file"],
+form input[type="password"],
+form input[type="email"],
+form select,
+form textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+/* Responsive Form Adjustments */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+        gap: 10px;
+        width: 100%;
+    }
+
+    form label {
+        font-size: 14px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    form button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+
+
+/* Staff Table */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.staff-table th, .staff-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.staff-table th {
+    background-color: #34495e;
+    color: #fff;
+}
+
+.staff-table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.staff-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.staff-table a {
+    color: #1abc9c;
+    text-decoration: none;
+}
+
+.staff-table .view-btn,
+.staff-table .attendance-btn {
+    padding: 5px 15px;
+    margin: 5px 0;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.staff-table .view-btn {
+    background-color: #3498db;
+}
+
+.staff-table .attendance-btn {
+    background-color: #2ecc71;
+}
+
+.staff-table .view-btn:hover,
+.staff-table .attendance-btn:hover {
+    opacity: 0.8;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10% auto;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal-body input, .modal-body select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-footer {
+    text-align: right;
+}
+
+.close-btn, .save-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.close-btn:hover, .save-btn:hover {
+    opacity: 0.8;
+}
+
+
+
+
+
+
+/* Sidebar Toggle */
+.sidebar-toggle {
+    display: none;
+    background-color: #34495e;
+    padding: 15px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;  /* Initially hide sidebar */
+    }
+
+    .sidebar.show {
+        display: block; /* Show when toggled */
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    .staff-table td {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .staff-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
+}

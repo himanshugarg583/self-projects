@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Schedule</title>
+    <link rel="stylesheet" href="admindashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+       
+       /* Ensure content takes full width and remains next to sidebar */
+       .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        h1 {
+            color: #2C3E50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .class-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .class-selector select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            background-color: #3498DB;
+            color: white;
+            border: none;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card h3 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .card .info {
+            font-size: 1.2rem;
+            color: #2C3E50;
+            margin-bottom: 10px;
+        }
+
+        .card .btn {
+            display: inline-block;
+            background-color: #3498DB;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .card .btn:hover {
+            background-color: #2980B9;
+        }
+
+        .student-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-table th, .student-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .student-table th {
+            background-color: #3498DB;
+            color: #fff;
+        }
+
+        .student-table td {
+            background-color: #ECF0F1;
+        }
+
+        .student-table tr:nth-child(even) td {
+            background-color: #BDC3C7;
+        }
+
+        .student-table tr:hover td {
+            background-color: #D5DBDB;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal h3 {
+            margin-top: 0;
+        }
+
+        .modal textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+               
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+     <!-- Main Content -->
+     <div class="main-content">
+        <h1>Student Attendance and Exam Eligibility</h1>
+        
+        <!-- Class Selector -->
+        <div class="class-selector">
+            <select id="classSelector" onchange="filterClassData()">
+                <option value="">Select a Class</option>
+                <option value="1">Class 1</option>
+                <option value="2">Class 2</option>
+            </select>
+        </div>
+
+        <!-- Card for Attendance and Eligibility -->
+        <div id="attendanceCard" class="card" style="display:none;">
+            <h3>Attendance & Eligibility Status</h3>
+            <div class="info">Total Classes: <span id="totalClasses"></span></div>
+            <div class="info">Attended Classes: <span id="attendedClasses"></span></div>
+            <div class="info">Attendance Percentage: <span id="attendancePercentage"></span></div>
+            <div id="examStatus"></div>
+            <button class="btn" onclick="openEditModal()">Edit Attendance</button>
+            <button class="btn" onclick="updateStatus()">Update Status</button>
+        </div>
+
+        <!-- Student Data Table -->
+        <table id="studentTable" class="student-table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Attendance</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic Student Data Here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Editing Attendance -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Attendance</h3>
+            <input type="number" id="newAttendance" placeholder="Enter attended classes" min="0" />
+            <button class="btn" onclick="saveAttendance()">Save</button>
+            <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Reason for Attendance Update -->
+    <div id="reasonModal" class="modal">
+        <div class="modal-content">
+            <h3>Provide a Reason</h3>
+            <textarea id="reasonInput" placeholder="Enter the reason (e.g. Medical, Special case, etc.)" rows="4"></textarea>
+            <button class="btn" onclick="saveReason()">Save Reason</button>
+            <button class="btn" onclick="closeReasonModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample student data
+        const studentData = {
+            1: [
+                { id: 101, name: "John Doe", class: "Class 1", totalClasses: 40, attendedClasses: 35, medicalApplication: false, feeDelay: false, reason: '' },
+                { id: 102, name: "Jane Smith", class: "Class 1", totalClasses: 40, attendedClasses: 28, medicalApplication: false, feeDelay: true, reason: '' }
+            ],
+            2: [
+                { id: 201, name: "Mary Johnson", class: "Class 2", totalClasses: 45, attendedClasses: 35, medicalApplication: true, feeDelay: false, reason: '' },
+                { id: 202, name: "James Brown", class: "Class 2", totalClasses: 45, attendedClasses: 25, medicalApplication: false, feeDelay: false, reason: '' }
+            ]
+        };
+
+        let currentClass = null;
+        let currentStudent = null;
+
+        window.onload = function() {
+            filterClassData();
+        };
+
+        // Function to filter and display student data based on selected class
+        function filterClassData() {
+            const classValue = document.getElementById("classSelector").value;
+            currentClass = classValue;
+            const tableBody = document.querySelector("#studentTable tbody");
+
+            tableBody.innerHTML = "";
+
+            if (classValue) {
+                const students = studentData[classValue];
+                students.forEach(student => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>${student.class}</td>
+                        <td>${student.attendedClasses} / ${student.totalClasses}</td>
+                        <td><button class="btn" onclick="viewAttendance(${student.id})">View Details</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="5">Please select a class to view student details.</td></tr>`;
+            }
+        }
+
+        // Function to view attendance details for a student
+        function viewAttendance(id) {
+            currentStudent = id;
+            const student = studentData[currentClass].find(student => student.id === id);
+            document.getElementById("totalClasses").textContent = student.totalClasses;
+            document.getElementById("attendedClasses").textContent = student.attendedClasses;
+            const percentage = (student.attendedClasses / student.totalClasses) * 100;
+            document.getElementById("attendancePercentage").textContent = `${percentage}%`;
+            
+            let examStatus = percentage >= 75 ? "Eligible for Exam" : "Not Eligible for Exam";
+            if (student.medicalApplication) {
+                examStatus = "Eligible due to Medical Application";
+            }
+
+            document.getElementById("examStatus").textContent = examStatus;
+            document.getElementById("attendanceCard").style.display = "block";
+        }
+
+        // Function to open modal to edit attendance
+        function openEditModal() {
+            const student = studentData[currentClass].find(student => student.id === currentStudent);
+            document.getElementById("newAttendance").value = student.attendedClasses;
+            document.getElementById("attendanceModal").style.display = "flex";
+        }
+
+        // Function to save attendance changes
+        function saveAttendance() {
+            const newAttendance = parseInt(document.getElementById("newAttendance").value);
+            const student = studentData[currentClass].find(student => student.id === currentStudent);
+            student.attendedClasses = newAttendance;
+            filterClassData();
+            closeModal();
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("attendanceModal").style.display = "none";
+        }
+
+        // Function to open the reason modal
+        function updateStatus() {
+            document.getElementById("reasonModal").style.display = "flex";
+        }
+
+        // Function to save the reason for eligibility update
+        function saveReason() {
+            const reason = document.getElementById("reasonInput").value;
+            const student = studentData[currentClass].find(student => student.id === currentStudent);
+            student.reason = reason;
+            student.medicalApplication = true;  // Mark as eligible due to reason
+
+            filterClassData();
+            closeReasonModal();
+        }
+
+        // Function to close the reason modal
+        function closeReasonModal() {
+            document.getElementById("reasonModal").style.display = "none";
+        }
+    </script>
+    
+</body>
+
+</html>

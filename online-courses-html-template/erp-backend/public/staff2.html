@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Worker Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="img/logo mps.jpg" alt="MPS School Logo" class="h-16">
+                <div class="text-center text-gray-600">
+                    <h1 class="text-xl font-semibold text-gray-800">Maheshwari Public School</h1>
+                    <p class="text-left">Affiliated to CBSE, Delhi</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-gray-600">Email: mpskijaipur@gmail.com</p>
+                <p class="text-sm text-gray-600">Contact: +91 9876543210, +91 7412949000</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-6">
+        <form id="worker-form" class="bg-white p-6 shadow-md rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Enter Worker Details</h2>
+            <input type="text" id="name" placeholder="Name" class="w-full px-4 py-2 border rounded mb-4">
+            <input type="text" id="position" placeholder="Position" class="w-full px-4 py-2 border rounded mb-4">
+            <input type="text" id="contact" placeholder="Contact" class="w-full px-4 py-2 border rounded mb-4">
+            <input type="text" id="shift" placeholder="Shift" class="w-full px-4 py-2 border rounded mb-4">
+            <input type="text" id="activeSince" placeholder="Active Since" class="w-full px-4 py-2 border rounded mb-4">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Worker</button>
+        </form>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12 text-center text-sm">
+        &copy; 2025 MPS School. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById("worker-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const position = document.getElementById("position").value;
+            const contact = document.getElementById("contact").value;
+            const shift = document.getElementById("shift").value;
+            const activeSince = document.getElementById("activeSince").value;
+
+            const response = await fetch("http://localhost:5000/post", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, position, contact, shift, activeSince })
+            });
+
+            if (response.ok) {
+                alert("Worker details saved successfully!");
+                this.reset();
+            } else {
+                alert("Error saving worker details.");
+            }
+        });
+    </script>
+</body>
+</html>

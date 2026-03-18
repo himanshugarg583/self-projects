@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mailbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="admindashboard.css">
+    <style>
+        .unread {
+            font-weight: bold;
+            background-color: #f0f4f8;
+        }
+        #mailbox {
+        max-height: 500px; /* Adjust the height based on your preference */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staff2.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                <li><a href="addstudentform.html">Student Form</a></li>
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Mailbox -->
+    <div class="flex-1 max-w-4xl mx-auto bg-white shadow-lg rounded-lg mt-10">
+        <div class="bg-blue-600 text-white p-4 flex justify-between">
+            <h2 class="text-xl font-semibold">Mailbox</h2>
+            <div>
+                <button id="compose-btn" class="bg-white text-blue-600 px-4 py-2 rounded">Compose</button>
+                <button id="sent-btn" class="bg-white text-blue-600 px-4 py-2 rounded">Sent</button>
+            </div>
+        </div>
+        <div class="p-4" id="mailbox">
+            <h3 class="text-lg font-semibold mb-4">Inbox</h3>
+            <div id="mail-list" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Compose Modal -->
+    <div id="compose-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-96">
+            <h2 class="text-lg font-semibold mb-4">Compose Email</h2>
+            <input type="text" id="recipient" class="w-full p-2 border rounded mb-2" placeholder="Recipient">
+            <input type="text" id="subject" class="w-full p-2 border rounded mb-2" placeholder="Subject">
+            <textarea id="message" class="w-full p-2 border rounded mb-2" placeholder="Message"></textarea>
+            <div class="flex justify-end space-x-2">
+                <button id="close-compose" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                <button id="send-mail" class="px-4 py-2 bg-blue-600 text-white rounded">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Functionality -->
+   
+    <script>
+        // Get the saved emails from localStorage (or use an empty array if none exist)
+        const inboxEmails = JSON.parse(localStorage.getItem('inboxEmails')) || [
+            { sender: "John Doe", subject: "Meeting Reminder", snippet: "Don't forget our meeting at 3 PM...", content: "Hello, just a reminder about our meeting today at 3 PM. See you soon!", read: false },
+            { sender: "Amazon", subject: "Your Order Confirmation", snippet: "Your order has been shipped...", content: "Your order #12345 has been shipped and will arrive soon.", read: false },
+        ];
+    
+        const sentEmails = JSON.parse(localStorage.getItem('sentEmails')) || [];
+        const mailList = document.getElementById('mail-list');
+        const composeModal = document.getElementById('compose-modal');
+    
+        function saveEmails() {
+            // Save both inbox and sent emails to localStorage
+            localStorage.setItem('inboxEmails', JSON.stringify(inboxEmails));
+            localStorage.setItem('sentEmails', JSON.stringify(sentEmails));
+        }
+    
+        function renderEmails(emails) {
+            mailList.innerHTML = '';
+            emails.forEach((mail, index) => {
+                const mailItem = document.createElement('div');
+                mailItem.className = `p-4 bg-gray-50 rounded-lg shadow hover:bg-gray-100 cursor-pointer transition ${mail.read ? '' : 'unread'}`;
+                mailItem.innerHTML = `
+                    <h4 class="font-bold text-gray-800">${mail.sender}</h4>
+                    <p class="text-gray-600 font-medium">${mail.subject}</p>
+                    <p class="text-gray-500 text-sm">${mail.snippet}</p>
+                `;
+                mailItem.addEventListener('click', () => {
+                    mail.read = true;
+                    renderEmails(emails);
+                    openCompose(mail.sender, `Re: ${mail.subject}`, `\n\n--- Original Message ---\n${mail.content}`);
+                    saveEmails(); // Save the emails after interaction
+                });
+                mailList.appendChild(mailItem);
+            });
+        }
+    
+        function openCompose(recipient = '', subject = '', message = '') {
+            document.getElementById('recipient').value = recipient;
+            document.getElementById('subject').value = subject;
+            document.getElementById('message').value = message;
+            composeModal.classList.remove('hidden');
+        }
+        
+        document.getElementById('close-compose').addEventListener('click', () => {
+            composeModal.classList.add('hidden');
+        });
+    
+        document.getElementById('send-mail').addEventListener('click', () => {
+            const recipient = document.getElementById('recipient').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+    
+            if (recipient && subject && message) {
+                const sentMail = { sender: "Me", subject, snippet: message.substring(0, 30) + "...", content: message, read: true };
+                sentEmails.push(sentMail);
+                inboxEmails.push({ sender: recipient, subject, snippet: message.substring(0, 30) + "...", content: message, read: false });
+                composeModal.classList.add('hidden');
+                document.getElementById('recipient').value = '';
+                document.getElementById('subject').value = '';
+                document.getElementById('message').value = '';
+                saveEmails(); // Save the emails after sending
+            }
+        });
+    
+        document.getElementById('sent-btn').addEventListener('click', () => {
+            renderEmails(sentEmails);
+            document.getElementById('mailbox').querySelector('h3').textContent = "Sent";
+        });
+    
+        document.getElementById('compose-btn').addEventListener('click', () => {
+            openCompose();
+        });
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEmails(inboxEmails); // Initially load inbox emails
+        });
+    </script>
+    
+</body>
+</html>

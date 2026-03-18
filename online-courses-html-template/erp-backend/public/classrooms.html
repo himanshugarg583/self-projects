@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom Information</title>
+    <link rel="stylesheet" href="classroom.css">
+    <link rel="stylesheet" href="admindashboard.css">
+
+    <style>
+        /* Main content */
+        .classroom-form-container, .classroom-list {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .classroom-form-container {
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto; /* Center the form */
+        }
+
+        .classroom-form-container input, .classroom-form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .classroom-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .classroom-list th, .classroom-list td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .classroom-list th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        /* Media Query for Responsiveness */
+        @media (max-width: 768px) {
+            .classroom-form-container, .classroom-list {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .classroom-form-container input, .classroom-form-container button {
+                width: 100%;
+            }
+
+            .classroom-list th, .classroom-list td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Teachers Form</a></li>
+                <li><a href="#">Teachers List</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="#">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <header class="header">
+            <h1>Classroom Information</h1>
+        </header>
+
+        <section class="classroom-form-container">
+            <h2>Add New Classroom</h2>
+            <form id="addClassroomForm">
+                <label for="roomNumber">Room No:</label>
+                <input type="text" id="roomNumber" name="roomNumber" required>
+                
+                <label for="className">Class:</label>
+                <input type="text" id="className" name="class" required>
+        
+                <label for="section">Section:</label>
+                <input type="text" id="section" name="section" required>
+        
+                <label for="capacity">Capacity:</label>
+                <input type="number" id="capacity" name="capacity" required>
+        
+                <button type="submit">Add Classroom</button>
+            </form>
+        </section>
+        
+        <section class="classroom-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room No.</th>
+                        <th>Class</th>
+                        <th>Section</th>
+                        <th>Capacity</th>
+                    </tr>
+                </thead>
+                <tbody id="classroomTable">
+                    <!-- Rows will be added dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001/classrooms';
+
+        async function fetchClassrooms() {
+            try {
+                const response = await fetch(API_URL);
+                const classrooms = await response.json();
+                const tableBody = document.getElementById('classroomTable');
+                tableBody.innerHTML = '';
+
+                classrooms.forEach(classroom => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${classroom.roomNumber}</td>
+                        <td>${classroom.class}</td>
+                        <td>${classroom.section}</td>
+                        <td>${classroom.capacity}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching classrooms:', error);
+            }
+        }
+
+        document.getElementById('addClassroomForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const roomNumber = document.getElementById('roomNumber').value;
+            const className = document.getElementById('className').value;
+            const section = document.getElementById('section').value;
+            const capacity = document.getElementById('capacity').value;
+
+            const newClassroom = {
+                roomNumber,
+                class: className,
+                section,
+                capacity
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newClassroom)
+                });
+
+                if (response.ok) {
+                    fetchClassrooms(); // Refresh the classroom list after adding
+                    alert('Classroom added successfully!');
+                } else {
+                    alert('Failed to add classroom');
+                }
+            } catch (error) {
+                console.error('Error adding classroom:', error);
+            }
+        });
+
+        fetchClassrooms(); // Initial fetch of classrooms
+    </script>
+</body>
+</html>

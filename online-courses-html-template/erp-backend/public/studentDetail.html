@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classwise Details</title>
+    <link rel="stylesheet" href="css/admindashboard.css">
+    <style>
+        /* Main Content */
+.content {
+    margin-left: 270px;
+    padding: 20px;
+    flex: 1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Flexbox Container for Cards and Form */
+.flex-container {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+/* Class Cards Section */
+.class-cards {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin: 0 0 10px;
+}
+
+.card .highlight {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Admission Form Pop-up Modal */
+.admission-form-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+}
+
+/* Form Scrollable */
+.form-scroll {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.form-group label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+button[type="submit"] {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .admission-form-container {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="#">Teacher Dashboard</a></li>
+                    <li><a href="#">Student Dashboard</a></li>
+                    <li><a href="#">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+       
+        <li><a href="classroom.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <header class="header">
+                <h1>Classwise Details</h1>
+            </header>
+
+            <!-- Flex Container for Cards and Form -->
+            <section class="flex-container">
+                <div id="class-cards" class="class-cards">
+                    <!-- Dynamic cards will be injected here -->
+                </div>
+                
+                <!-- Admission Form Pop-up -->
+                <div id="admission-form-container" class="admission-form-container">
+                    <!-- The form will be shown as a pop-up here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        let classData = [
+    { grade: "1st Grade", totalStudents: 120, sections: ["A", "B"] },
+    { grade: "2nd Grade", totalStudents: 100, sections: ["A", "B", "C"] },
+    { grade: "3rd Grade", totalStudents: 150, sections: ["A", "B", "C", "D"] },
+];
+
+// Render class cards with modern admission form
+function renderClassCards() {
+    const classCardsContainer = document.getElementById("class-cards");
+    classCardsContainer.innerHTML = "";
+
+    classData.forEach((classItem, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${classItem.grade}</h3>
+            <p>Total Students: <span class="highlight">${classItem.totalStudents}</span></p>
+            <p>Sections: <span class="highlight">${classItem.sections.join(", ")}</span></p>
+            <button onclick="openAdmissionForm(${index})">Admission</button>
+        `;
+
+        classCardsContainer.appendChild(card);
+    });
+}
+
+// Open the admission form as a modal
+function openAdmissionForm(classIndex) {
+    const formContainer = document.getElementById("admission-form-container");
+
+    formContainer.innerHTML = `
+        <div class="admission-form">
+            <div class="modal-header">
+                <h4>Admission Form for ${classData[classIndex].grade}</h4>
+                <button onclick="closeAdmissionForm()" class="close-btn">&times;</button>
+            </div>
+            <form action='/post' method="POST" class="form-scroll">
+                <div class="form-group">
+                    <input type="text" id="studentName" name="studentName" required>
+                    <label for="studentName">Student Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="number" id="age" name="age" required>
+                    <label for="age">Age</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="parentName" name="FatherName" required>
+                    <label for="FatherName">Father Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="parentName" name="MotherName" required>
+                    <label for="MotherName">Mother Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="fatherOccupation" name="fatherOccupation" required>
+                    <label for="fatherOccupation">Father's Occupation</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="motherOccupation" name="motherOccupation" required>
+                    <label for="motherOccupation">Mother's Occupation</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="guardianContact" name="FatherContact" required>
+                    <label for="FatherContact">Father Contact No</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="guardianContact" name="MotherContact" required>
+                    <label for="MotherContact">Mother Contact No</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="previousSchool" name="previousSchool" required>
+                    <label for="previousSchool">Previous School</label>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="medicalHistory" name="medicalHistory" placeholder="Any medical conditions?" rows="3"></textarea>
+                    <label for="medicalHistory">Medical History</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="address" name="address" required>
+                    <label for="address">Address</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" id="dob" name="dob" required>
+                    <label for="dob">Date of Birth</label>
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    `;
+
+    // Show the modal
+    formContainer.style.display = 'block';
+}
+
+// Close the admission form modal
+function closeAdmissionForm() {
+    const formContainer = document.getElementById("admission-form-container");
+    formContainer.style.display = 'none';
+}
+// async function submitForm(event, classIndex) {
+//             event.preventDefault();
+
+//             const form = document.getElementById(`form-${classIndex}`);
+//             const formData = new FormData(form);
+
+//             try {
+//                 const response = await fetch('/post', {
+//                     method: 'POST',
+//                     body: formData,
+//                 });
+//                 const result = await response.text();
+//                 console.log(result);  // Logs the response from the server
+//                 alert('Form submitted successfully!');
+//                 closeAdmissionForm();
+//             } catch (error) {
+//                 console.error('Error:', error);
+//                 alert('Error submitting form!');
+//             }
+//         }
+// // Initial render
+// renderClassCards();
+
+    </script>
+</body>
+</html>

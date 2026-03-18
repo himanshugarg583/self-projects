@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Schedule</title>
+    <link rel="stylesheet" href="schedule.css">
+    <link rel="stylesheet" href="css/admindashboard.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+               
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="#">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+<div class="main-content">
+    <h1>Schedule for <span id="teacherName"></span></h1>
+
+    <div class="schedule-container">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="scheduleBody">
+                <!-- Schedule rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Sample teacher schedule data
+    const teacherSchedules = {
+        "John Doe": [
+            { day: "Monday", class: "10A", subject: "Mathematics", time: "9:00 AM - 10:00 AM" },
+            { day: "Tuesday", class: "10B", subject: "English", time: "10:00 AM - 11:00 AM" },
+            { day: "Wednesday", class: "10C", subject: "Science", time: "11:00 AM - 12:00 PM" },
+            { day: "Thursday", class: "10A", subject: "History", time: "1:00 PM - 2:00 PM" },
+            { day: "Friday", class: "10B", subject: "Geography", time: "2:00 PM - 3:00 PM" }
+        ],
+        "Jane Smith": [
+            { day: "Monday", class: "10B", subject: "Physics", time: "9:00 AM - 10:00 AM" },
+            { day: "Tuesday", class: "10A", subject: "Chemistry", time: "10:00 AM - 11:00 AM" },
+            { day: "Wednesday", class: "10C", subject: "Biology", time: "11:00 AM - 12:00 PM" },
+            { day: "Thursday", class: "10B", subject: "Computer Science", time: "1:00 PM - 2:00 PM" },
+            { day: "Friday", class: "10A", subject: "Mathematics", time: "2:00 PM - 3:00 PM" }
+        ]
+    };
+
+    // Store teacher schedules in localStorage
+    localStorage.setItem("teacherSchedules", JSON.stringify(teacherSchedules));
+
+    // Retrieve teacher's name from localStorage
+    const teacherName = localStorage.getItem("teacherName");
+
+    // Display teacher's name
+    document.getElementById("teacherName").innerText = teacherName;
+
+    // Retrieve the teacher's schedule from localStorage
+    const storedSchedules = JSON.parse(localStorage.getItem("teacherSchedules"));
+
+    if (storedSchedules && storedSchedules[teacherName]) {
+        const schedule = storedSchedules[teacherName];
+
+        // Populate the schedule table
+        const scheduleBody = document.getElementById("scheduleBody");
+        schedule.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.day}</td>
+                <td>${item.class}</td>
+                <td>${item.subject}</td>
+                <td>${item.time}</td>
+            `;
+            scheduleBody.appendChild(row);
+        });
+    } else {
+        document.getElementById("scheduleBody").innerHTML = "<tr><td colspan='4'>No schedule found for this teacher.</td></tr>";
+    }
+</script>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>  <!-- FontAwesome for icons -->
+
+</body>
+</html>

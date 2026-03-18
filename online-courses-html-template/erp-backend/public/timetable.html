@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Timetable</title>
+    <link rel="stylesheet" href="css/admindashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+            flex: 1;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+        .card-body {
+            padding: 15px;
+            display: none;
+        }
+        .card-body.show {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        td {
+            background-color: #fff;
+            cursor: pointer;
+        }
+        td:focus {
+            outline: 2px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="addteacherform.html">Add Teacher Form</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+       
+        <li><a href="classrooms.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+   
+       <!-- Main Content -->
+    <div class="main">
+        <h1>Class Timetable</h1>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header" onclick="toggleCardBody(this)">Class 8</div>
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>8:00 - 9:00 AM</th>
+                                <th>9:00 - 10:00 AM</th>
+                                <th>10:00 - 11:00 AM</th>
+                                <th>11:00 - 11:30 AM</th>
+                                <th>11:30 - 12:30 PM</th>
+                                <th>12:30 - 1:30 PM</th>
+                                <th>1:30 - 2:00 PM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Monday</td>
+                                <td contenteditable="true">Math</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Science</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">Social Studies</td>
+                                <td contenteditable="true">Art</td>
+                                <td contenteditable="true">Sports</td>
+                            </tr>
+                            <tr>
+                                <td>Tuesday</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Science</td>
+                                <td contenteditable="true">Math</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">Computer</td>
+                                <td contenteditable="true">Art</td>
+                                <td contenteditable="true">Music</td>
+                            </tr>
+                            <tr>
+                                <td>Wednesday</td>
+                                <td contenteditable="true">Science</td>
+                                <td contenteditable="true">Math</td>
+                                <td contenteditable="true">Social Studies</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Sports</td>
+                                <td contenteditable="true">Art</td>
+                            </tr>
+                            <tr>
+                                <td>Thursday</td>
+                                <td contenteditable="true">Social Studies</td>
+                                <td contenteditable="true">Computer</td>
+                                <td contenteditable="true">Math</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Science</td>
+                                <td contenteditable="true">Music</td>
+                            </tr>
+                            <tr>
+                                <td>Friday</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Science</td>
+                                <td contenteditable="true">Math</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">Art</td>
+                                <td contenteditable="true">Sports</td>
+                                <td contenteditable="true">Social Studies</td>
+                            </tr>
+                            <tr>
+                                <td>Saturday</td>
+                                <td contenteditable="true">Sports</td>
+                                <td contenteditable="true">Art</td>
+                                <td contenteditable="true">Music</td>
+                                <td>Lunch</td>
+                                <td contenteditable="true">Computer</td>
+                                <td contenteditable="true">English</td>
+                                <td contenteditable="true">Math</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleCardBody(header) {
+            const cardBody = header.nextElementSibling;
+            cardBody.classList.toggle('show');
+        }
+
+       
+        document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector("table");
+    const storageKey = "timetableData";
+
+    // Load saved data
+    function loadTableData() {
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const tableData = JSON.parse(savedData);
+            table.querySelectorAll("tbody tr").forEach((row, rowIndex) => {
+                row.querySelectorAll("td[contenteditable='true']").forEach((cell, colIndex) => {
+                    cell.innerText = tableData[rowIndex]?.[colIndex] || "";
+                });
+            });
+        }
+    }
+
+    // Save data to localStorage
+    function saveTableData() {
+        const tableData = [];
+        table.querySelectorAll("tbody tr").forEach((row) => {
+            const rowData = [];
+            row.querySelectorAll("td[contenteditable='true']").forEach((cell) => {
+                rowData.push(cell.innerText);
+            });
+            tableData.push(rowData);
+        });
+        localStorage.setItem(storageKey, JSON.stringify(tableData));
+    }
+
+    // Attach event listeners to editable cells
+    table.addEventListener("input", saveTableData);
+
+    // Load data on page load
+    loadTableData();
+});
+
+    </script>
+</body>
+</html>

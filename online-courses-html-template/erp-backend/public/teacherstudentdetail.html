@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details with Attendance & Achievements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container mx-auto p-6">
+        <!-- Student Details Section -->
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-6 grid grid-cols-2 gap-6">
+            <div class="col-span-1">
+                <h2 class="font-extrabold text-xl text-gray-700 mb-4">Student Details</h2>
+                <form action='/post' method="POST">
+                    <div class="mb-4">
+                        <label class="font-medium">Student Name</label>
+                        <input type="text" id="student-name" class="form-input w-full" placeholder="Enter Name" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="font-medium">Roll No</label>
+                        <input type="text" id="student-rollno" class="form-input w-full" placeholder="Enter Roll No" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="font-medium">Date of Birth</label>
+                        <input type="date" id="student-dob" class="form-input w-full" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="font-medium">Father's Name</label>
+                        <input type="text" id="student-father-name" class="form-input w-full" placeholder="Enter Father's Name" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="font-medium">Mother's Name</label>
+                        <input type="text" id="student-mother-name" class="form-input w-full" placeholder="Enter Mother's Name" disabled>
+                    </div>
+                    <div class="mb-4">
+                        <label class="font-medium">Aadhar Number</label>
+                        <input type="text" id="student-aadhar" class="form-input w-full" placeholder="Enter Aadhar Number" disabled>
+                    </div>
+
+                    <!-- Attendance Section -->
+                    <!-- <div class="mb-4">
+                        <label class="font-medium">Mark Attendance</label>
+                        <div class="flex space-x-4">
+                            <button onclick="markAttendance('Present')" class="bg-green-500 text-white py-2 px-4 rounded">Present</button>
+                            <button onclick="markAttendance('Absent')" class="bg-red-500 text-white py-2 px-4 rounded">Absent</button>
+                        </div>
+                    </div> -->
+
+                    <!-- Achievements Section -->
+                    <div class="mb-4">
+                        <label class="font-medium">Achievements</label>
+                        <textarea id="student-achievements" class="form-input w-full" placeholder="Enter student's achievements"></textarea>
+                    </div>
+
+                    <!-- Save Button -->
+                    <button onclick="saveUpdatedDetails()" class="bg-blue-500 text-white py-2 px-4 rounded mt-4">Save Details</button>
+                </form>
+            </div>
+
+            <!-- <div class="col-span-1">
+               
+                <h2 class="font-extrabold text-xl text-gray-700 mb-4">Attendance Graph</h2>
+                <canvas id="attendance-chart" class="w-full h-64"></canvas>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        // // Global variable to hold attendance data and achievements
+        // let attendanceData = [];
+        // let achievementsData = "";
+
+        // // Retrieve and display student details from localStorage based on rollNo from URL
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const rollNo = urlParams.get('rollNo');  // Get rollNo from URL
+
+        //     if (rollNo) {
+        //         const studentDetails = JSON.parse(localStorage.getItem(`studentDetails-${rollNo}`));
+
+        //         if (studentDetails) {
+        //             // Populate the fields with the saved data
+        //             document.getElementById("student-name").value = studentDetails.name;
+        //             document.getElementById("student-rollno").value = studentDetails.rollNo;
+        //             document.getElementById("student-dob").value = studentDetails.dob;
+        //             document.getElementById("student-father-name").value = studentDetails.fatherName;
+        //             document.getElementById("student-mother-name").value = studentDetails.motherName;
+        //             document.getElementById("student-aadhar").value = studentDetails.aadhar;
+        //             document.getElementById("student-achievements").value = studentDetails.achievements || "";
+
+        //             // Load previous attendance data if exists
+        //             if (studentDetails.attendance) {
+        //                 attendanceData = studentDetails.attendance;
+        //                 updateAttendanceChart();
+        //             }
+        //         } else {
+        //             alert('Student details not found in localStorage!');
+        //         }
+        //     } else {
+        //         alert('No roll number found in URL!');
+        //     }
+        // });
+
+        // // Function to mark attendance (Present or Absent)
+        // function markAttendance(status) {
+        //     const currentDate = new Date().toLocaleDateString();  // Get current date as string (MM/DD/YYYY)
+
+        //     // Prevent marking attendance multiple times for the same day
+        //     const existingAttendance = attendanceData.find(record => record.date === currentDate);
+        //     if (existingAttendance) {
+        //         alert('Attendance for today has already been marked.');
+        //         return;
+        //     }
+
+        //     // Add attendance data
+        //     attendanceData.push({
+        //         date: currentDate,
+        //         status: status
+        //     });
+
+        //     // Update the attendance chart
+        //     updateAttendanceChart();
+        // }
+
+        // // Function to update the attendance chart
+        // function updateAttendanceChart() {
+        //     const labels = attendanceData.map(record => record.date);
+        //     const presentData = attendanceData.filter(record => record.status === 'Present').length;
+        //     const absentData = attendanceData.filter(record => record.status === 'Absent').length;
+
+        //     const ctx = document.getElementById('attendance-chart').getContext('2d');
+        //     new Chart(ctx, {
+        //         type: 'bar',
+        //         data: {
+        //             labels: labels,
+        //             datasets: [{
+        //                 label: 'Attendance',
+        //                 data: attendanceData.map(record => record.status === 'Present' ? 1 : 0),
+        //                 backgroundColor: '#4caf50',
+        //                 borderColor: '#4caf50',
+        //                 borderWidth: 1
+        //             }, {
+        //                 label: 'Absent',
+        //                 data: attendanceData.map(record => record.status === 'Absent' ? 1 : 0),
+        //                 backgroundColor: '#f44336',
+        //                 borderColor: '#f44336',
+        //                 borderWidth: 1
+        //             }]
+        //         },
+        //         options: {
+        //             scales: {
+        //                 y: {
+        //                     beginAtZero: true
+        //                 }
+        //             }
+        //         }
+        //     });
+        // }
+
+        // // Function to save the updated details and attendance back to localStorage
+        // function saveUpdatedDetails() {
+        //     const updatedStudentDetails = {
+        //         name: document.getElementById("student-name").value,
+        //         rollNo: document.getElementById("student-rollno").value,
+        //         dob: document.getElementById("student-dob").value,
+        //         fatherName: document.getElementById("student-father-name").value,
+        //         motherName: document.getElementById("student-mother-name").value,
+        //         aadhar: document.getElementById("student-aadhar").value,
+        //         achievements: document.getElementById("student-achievements").value,
+        //         attendance: attendanceData  // Save attendance data
+        //     };
+
+        //     // Save the updated details back to localStorage using rollNo as the key
+        //     localStorage.setItem(`studentDetails-${updatedStudentDetails.rollNo}`, JSON.stringify(updatedStudentDetails));
+
+        //     alert("Student details updated successfully!");
+        // }
+    </script>
+
+</body>
+</html>

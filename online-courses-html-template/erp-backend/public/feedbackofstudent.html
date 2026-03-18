@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Feedback</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Smooth hover animations */
+        .nav-item {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #e11d48;
+            transform: translateX(5px);
+        }
+
+        .feedback-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feedback-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Adjustments for layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: hidden;
+        }
+
+        header,
+        footer {
+            flex-shrink: 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            overflow-y: auto;
+        }
+
+        aside {
+            flex-shrink: 0;
+            width: 16rem; /* Sidebar width */
+            overflow-y: auto;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- School Header -->
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="flex items-center space-x-4">
+                <img src="img/logo mps.jpg" alt="MPS School Logo" class="h-16">
+                <div class="text-gray-600">
+                    <h1 class="text-xl font-semibold text-gray-800">Maheshwari Public School</h1>
+                    <p>Affiliated to CBSE, Delhi</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-gray-600">Email: mpskijaipur@gmail.com</p>
+                <p class="text-sm text-gray-600">Contact: +91 9876543210, +91 7412949000</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="bg-[#102C57] text-white shadow-lg p-4 flex flex-col justify-between">
+            <div>
+                <div class="mb-6 text-center">
+                    <img src="img/student1.jpg" alt="Profile" class="h-16 w-16 rounded-full mx-auto mb-2">
+                    <h2 class="text-lg font-semibold">Aadhya Kapoor</h2>
+                    <p class="text-sm text-gray-300">Class: 7A</p>
+                    <button onclick="openStudentProfile()" class="mt-4 bg-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition">
+                        My Profile
+                    </button>
+                </div>
+                <nav>
+                    <ul>
+                        <li class="nav-item mb-4 rounded-lg">
+                            <a href="studentdashboard.html" class="flex items-center text-lg px-4 py-2">
+                                <i class="fa fa-tachometer-alt mr-3"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 rounded-lg">
+                            <a href="studentassigmentdash.html" class="flex items-center text-lg px-4 py-2">
+                                <i class="fa fa-book mr-3"></i> Assignments
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 rounded-lg">
+                            <a href="feedbackofstudent.html" class="flex items-center text-lg px-4 py-2">
+                                <i class="fa fa-file mr-3"></i> Teacher Feedback
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 rounded-lg">
+                            <a href="marksheetforstudent.html" class="flex items-center text-lg px-4 py-2">
+                                <i class="fa fa-graduation-cap mr-3"></i> Exam Results
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 rounded-lg">
+                            <a href="holidaylist.html" class="flex items-center text-lg px-4 py-2">
+                                <i class="fa fa-calendar-alt mr-3"></i> Holidays
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <button onclick="confirmLogout()" class="w-full bg-red-600 text-center py-2 rounded-lg text-sm hover:bg-red-700 transition">
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="content p-6">
+            <h2 class="text-3xl font-semibold text-center text-blue-600 mb-8" id="contentHeader">Your Teacher Feedback</h2>
+            <div id="feedbackList" class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Your Feedback</h3>
+                <ul id="feedbacks" class="space-y-4">
+                    <!-- Feedback items dynamically added here -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="text-center text-sm text-gray-400">&copy; 2025 MPS School. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const loggedInStudent = 'Aadhya Kapoor';
+
+        function confirmLogout() {
+            const isConfirmed = confirm("Are you sure you want to logout?");
+            if (isConfirmed) {
+                window.location.href = "login.html";
+            }
+        }
+
+        function openStudentProfile() {
+            window.location.href = "profileofstudent.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", loadFeedback);
+
+        const feedbackList = [
+            { subject: "Mathematics", teacher: "Mr. Smith", feedback: "Great improvement in your math skills. Keep it up!", type: "positive", student: "Aadhya Kapoor" },
+            { subject: "English", teacher: "Mrs. Johnson", feedback: "You have excellent writing skills. Keep practicing!", type: "positive", student: "Aadhya Kapoor" },
+            { subject: "Hindi", teacher: "Mr. Adams", feedback: "You need to focus more on the history chapters. Let's work on that.", type: "complaint", student: "Aadhya Kapoor" },
+            { subject: "EVS", teacher: "Dr. Roberts", feedback: "You are doing an excellent job in EVS. Well done!", type: "positive", student: "Aadhya Kapoor" },
+            { subject: "Dance", teacher: "Mrs. Wilson", feedback: "Try to participate more in the competition, your input is valuable.", type: "complaint", student: "Aadhya Kapoor" },
+            { subject: "Computer", teacher: "Mr. Turner", feedback: "Your practical skills are impressive! Keep experimenting!", type: "positive", student: "Aadhya Kapoor" },
+            { subject: "Physical Education", teacher: "Mr. Brown", feedback: "Excellent performance in physical activities. Keep being active!", type: "positive", student: "Aadhya Kapoor" },
+            { subject: "Art", teacher: "Ms. Lee", feedback: "You have a unique style in art. Keep experimenting with colors!", type: "positive", student: "Aadhya Kapoor" }
+        ];
+
+        function loadFeedback() {
+            const feedbacksContainer = document.getElementById('feedbacks');
+            feedbacksContainer.innerHTML = '';
+            feedbackList.forEach(feedback => {
+                if (feedback.student === loggedInStudent) {
+                    const feedbackItem = document.createElement('li');
+                    feedbackItem.classList.add('p-4', 'border', 'rounded-lg', 'shadow', 'feedback-item');
+
+                    const feedbackColor = feedback.type === 'positive' ? 'bg-green-100' : 'bg-red-100';
+                    feedbackItem.classList.add(feedbackColor);
+
+                    feedbackItem.innerHTML = `
+                        <h4 class="text-lg font-semibold text-blue-600">${feedback.subject}</h4>
+                        <p class="text-sm text-gray-600">Teacher: ${feedback.teacher}</p>
+                        <p class="mt-2">${feedback.feedback}</p>
+                    `;
+                    feedbacksContainer.appendChild(feedbackItem);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

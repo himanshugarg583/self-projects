@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday List - School</title>
+    
+    <link rel="stylesheet" href="admindashboard.css">
+    <style>
+         /* Dashboard Styling */
+         .dashboard-container {
+            margin-left: 80px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .holiday-container {
+            background: #ffffff;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto; /* Centered */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .holiday-container h2 {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #6a11cb;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .table thead {
+            background: #6a11cb;
+            color: #fff;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #eaf3ff;
+        }
+
+        .table tbody tr:hover {
+            background-color: #d6e9f8;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn {
+            margin-right: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Styling */
+        #holidayModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            animation: modalFadeIn 0.3s ease-in-out;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            margin-bottom: 15px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                margin-left: 20px;
+            }
+
+            .holiday-container {
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            .table th, .table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="school-item">
+                <img src="img/logo mps.jpg" alt="MPS Logo">
+                <span id="schoolName">Maheshwari Public School</span>
+            </li>
+        
+            <li>
+                <select id="schoolDropdown" onchange="openSchoolDashboard()">
+                    <option value="">Select a School</option>
+                    <option value="Branch 1">Pratap Nagar Jaipur</option>
+                    <option value="Branch 2">Jawahar Nagar Jaipur</option>
+                    <option value="Branch 3">Tilak Nagar Jaipur</option>
+                    <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+                    <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+            </li>
+
+            <!-- Student Dropdown -->
+            <li class="dropdown">
+                <a href="javascript:void(0)">Dashboard</a>
+                <ul class="dropdown-menu">
+                    <li><a href="admindash.html">Admin Dashboard</a></li>
+                    <li><a href="teacherdash.html">Teacher Dashboard</a></li>
+                    <li><a href="studentdashboard.html">Student Dashboard</a></li>
+                    <li><a href="staffdashboard.html">Staff Dashboard</a></li>
+                
+                </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="javascript:void(0)">Student</a>
+              <ul class="dropdown-menu">
+                  <li><a href="studentDetail.html">All Students</a></li>
+                  <li><a href="studentpromote.html">Student Promotion</a></li>
+              </ul>
+          </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Staff</a>
+            <ul class="dropdown-menu">
+                <li><a href="sd.html">All Staffs</a></li>
+                <li><a href="#">Staff List</a></li>
+            </ul>
+        </li>
+
+        <li class="dropdown">
+            <a href="javascript:void(0)">Teachers</a>
+            <ul class="dropdown-menu">
+                <li><a href="td.html">All Teachers</a></li>
+                <li><a href="#">Teacher Details</a></li>
+                <li><a href="#">Routine</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="classroom.html">Classroom</a></li>
+        <li><a href="timetable.html">Time Table</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Examinations</a>
+            <ul class="dropdown-menu">
+                <li><a href="examschedule.html">Exam Schedule</a></li>
+                <li><a href="examgrade.html">Exam Grade</a></li>
+                <li><a href="examattendance.html">Exam Attendance</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Hostel</a>
+            <ul class="dropdown-menu">
+                <li><a href="hosteldetail.html">Hostel Form</a></li>
+                <li><a href="hosteldetails.html">Hostel List</a></li>
+                <li><a href="hostelroom.html">Rooms</a></li>
+            </ul>
+        </li>
+        <li><a href="holiday.html">Holidays</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Attendance</a>
+            <ul class="dropdown-menu">
+                <li><a href="attendance_student.html">Student</a></li>
+                <li><a href="attendance_teacher.html">Teacher</a></li>
+                <li><a href="attendance_worker.html">Staff</a></li>
+            </ul>
+        </li>
+        
+        
+        <li><a href="departments.html">Departments</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)">Authentication</a>
+            <ul class="dropdown-menu">
+                <li><a href="login.html" target="_blank">Login</a></li>
+                <li><a href="signup.html" target="_blank">Register</a></li>
+                <li><a href="forgetpassword.html" target="_blank">Forget Password</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="holiday-container">
+            <h2>School Holiday List</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th>Occasion</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="holidayTableBody"></tbody>
+            </table>
+            <button class="btn btn-success" onclick="openAddHolidayModal()">Add Holiday</button>
+        </div>
+    </div>
+
+    <div id="holidayModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalTitle">Add/Edit Holiday</h5>
+                <button class="btn-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="holidayForm">
+                    <div class="mb-3">
+                        <label for="holidayDate" class="form-label">Date</label>
+                        <input type="date" id="holidayDate" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="holidayDay" class="form-label">Day</label>
+                        <input type="text" id="holidayDay" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="holidayOccasion" class="form-label">Occasion</label>
+                        <input type="text" id="holidayOccasion" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveHoliday()">Save</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let holidays = JSON.parse(localStorage.getItem('holidays')) || [];
+        let editIndex = null;
+
+        function loadHolidays() {
+            const tableBody = document.getElementById('holidayTableBody');
+            tableBody.innerHTML = '';
+            holidays.forEach((holiday, index) => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${holiday.date}</td>
+                        <td>${holiday.day}</td>
+                        <td>${holiday.occasion}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="editHoliday(${index})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteHoliday(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAddHolidayModal() {
+            editIndex = null;
+            document.getElementById('holidayDate').value = '';
+            document.getElementById('holidayDay').value = '';
+            document.getElementById('holidayOccasion').value = '';
+            document.getElementById('holidayModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('holidayModal').style.display = 'none';
+        }
+
+        function saveHoliday() {
+            const date = document.getElementById('holidayDate').value;
+            const day = document.getElementById('holidayDay').value;
+            const occasion = document.getElementById('holidayOccasion').value;
+
+            if (editIndex !== null) {
+                holidays[editIndex] = { date, day, occasion };
+            } else {
+                holidays.push({ date, day, occasion });
+            }
+
+            localStorage.setItem('holidays', JSON.stringify(holidays));
+            loadHolidays();
+            closeModal();
+        }
+
+        function editHoliday(index) {
+            editIndex = index;
+            const holiday = holidays[index];
+            document.getElementById('holidayDate').value = holiday.date;
+            document.getElementById('holidayDay').value = holiday.day;
+            document.getElementById('holidayOccasion').value = holiday.occasion;
+            document.getElementById('holidayModal').style.display = 'flex';
+        }
+
+        function deleteHoliday(index) {
+            holidays.splice(index, 1);
+            localStorage.setItem('holidays', JSON.stringify(holidays));
+            loadHolidays();
+        }
+
+        loadHolidays();
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Signup with Validation</title>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 1cm;
+            gap: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-height: 500px;
+            overflow-y: auto;
+            width: 40%;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .container input, .container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none; /* Initially hidden */
+        }
+
+        .terms-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .terms-slider {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .terms-slider input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+        }
+
+        .terms-slider .slider {
+            position: absolute;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            background-color: #ddd;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .terms-slider .slider:before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s ease;
+        }
+
+        .terms-slider input:checked + .slider {
+            background-color: #28a745; /* Green color when toggled */
+        }
+
+        .terms-slider input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .terms-text {
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #4e54c8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button-container button:hover {
+            background-color: #8f94fb;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .switch a {
+            color: #4e54c8;
+            text-decoration: none;
+        }
+
+        .switch a:hover {
+            text-decoration: underline;
+        }
+
+        .image-container {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            height: 100%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .caption {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        opacity: 0; /* Start with hidden text */
+        transition: opacity 0.5s ease; /* Smooth fade-in effect */
+    }
+
+    .caption.fade-in {
+        opacity: 1; /* Fully visible when class is added */
+    }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+            .container, .image-container {
+                width: 90%;
+                margin: 10px 0;
+            }
+            .image-container {
+                margin-top: 20px;
+            }
+            .caption {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .caption {
+                font-size: 1rem;
+            }
+            .image-container img {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container input, .button-container button {
+                padding: 8px 15px;
+            }
+            .container label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <h2>Signup</h2>
+            <form id="signupForm">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" placeholder="Enter your email" required>
+
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" placeholder="Create a password" required>
+                <div class="error" id="passwordError">Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.</div>
+
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                <div class="error" id="confirmError">Passwords do not match.</div>
+
+                <label for="schoolSelect">Select Your Branch</label>
+                <select id="schoolSelect" required>
+                    <option value="" disabled selected>-- Maheshwari Public School --</option>
+                    <option value="school1">Pratap Nagar Jaipur</option>
+                    <option value="school2">Tilak Nagar Jaipur</option>
+                    <option value="school3">Jawahar Nagar Jaipur</option>
+                    <option value="school4">Sanskriti Bani Park Jaipur</option>
+                    <option value="school5">Sanskriti Jagatpura Jaipur</option>
+                </select>
+
+                <label for="designationSelect">Select Your Field</label>
+                <select id="designationSelect" required>
+                    <option value="" disabled selected>-- Maheshwari Public School --</option>
+                    <option value="admin">Admin</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="staff">Staff</option>
+                    <option value="student">Student</option>
+                </select>
+
+                <div class="terms-container">
+                    <label class="terms-slider">
+                        <input type="checkbox" id="termsCheckbox" required>
+                        <span class="slider"></span>
+                    </label>
+                    <span class="terms-text">Accept Terms & Conditions</span>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Sign Up</button>
+                </div>
+            </form>
+            <p class="switch">Already have an account? <a href="login.html">Login</a></p>
+        </div>
+        <div class="image-container">
+            <img src="img/signup1.png" alt="Example Image">
+            <div class="caption" id="captionText">Start managing free now! EduSmart is a 100% free online school details management software for a lifetime with no limitations.</div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordError = document.getElementById('passwordError');
+        const confirmError = document.getElementById('confirmError');
+        const schoolSelect = document.getElementById('schoolSelect');
+        const designationSelect = document.getElementById('designationSelect');
+        const termsCheckbox = document.getElementById('termsCheckbox');
+    
+        function validatePassword(password) {
+            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return regex.test(password);
+        }
+    
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
+    
+            let isValid = true;
+    
+            // Validate password strength
+            if (!validatePassword(passwordInput.value)) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+    
+            // Validate confirm password
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmError.style.display = 'none';
+            }
+    
+            // Check school selection
+            if (!schoolSelect.value) {
+                alert('Please select a school.');
+                isValid = false;
+            }
+
+            if (!designationSelect.value) {
+                alert('Please select a role.');
+                isValid = false;
+            }
+    
+            // Check terms and conditions
+            if (!termsCheckbox.checked) {
+                alert('You must accept the terms and conditions.');
+                isValid = false;
+            }
+    
+            if (isValid) {
+                // Send data to the backend
+                const signupData = {
+                    email: document.getElementById('signupEmail').value,
+                    password: passwordInput.value,
+                    school: schoolSelect.value,
+                    designation: designationSelect.value,
+                    acceptedTerms: termsCheckbox.checked,
+                };
+    
+                try {
+    const response = await fetch('http://localhost:4000/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signupData),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        alert(result.message); // Success message
+    } else {
+        // Check if there's a specific error message from the backend
+        alert(result.message || 'An error occurred. Please try again.');
+    }
+} catch (error) {
+    console.error('Error during signup:', error);
+    alert('An error occurred while processing your request. Please try again.');
+}
+
+            }
+        });
+    
+        // Caption animation logic
+        const captions = [
+            "Start managing free now! EduSmart is a 100% free online school details management software for a lifetime with no limitations.",
+            "EduSmart provides seamless management with zero costs. Your school data is secure and available anywhere.",
+            "Sign up today and experience the future of school management. Simple, free, and efficient.",
+            "Get started with EduSmart! No hidden fees, no surprises, just efficient school management at no cost."
+        ];
+    
+        let index = 0;
+        let interval;
+        const captionElement = document.getElementById("captionText");
+    
+        function changeCaption() {
+            captionElement.classList.remove("fade-in");
+            setTimeout(() => {
+                captionElement.textContent = captions[index];
+                captionElement.classList.add("fade-in");
+                index = (index + 1) % captions.length;
+            }, 500);
+        }
+    
+        function startCaptionChange() {
+            interval = setInterval(changeCaption, 2000);
+        }
+    
+        function stopCaptionChange() {
+            clearInterval(interval);
+        }
+    
+        startCaptionChange();
+    
+        captionElement.addEventListener("mouseenter", stopCaptionChange);
+        captionElement.addEventListener("mouseleave", startCaptionChange);
+    </script>
+    
+</body>
+</html>

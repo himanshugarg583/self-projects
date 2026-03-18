@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Details</title>
+    <link rel="stylesheet" href="td.css">
+    <style>
+        /* Styling for Teacher Details Page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f7f9fc;
+            color: #333;
+        }
+
+        .main-content {
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .details-section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: #fafafa;
+        }
+
+        .details-section h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .details-section p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .details-section strong {
+            color: #000;
+        }
+
+        .resume {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .resume a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .resume a:hover {
+            color: #388E3C;
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <h1>Teacher Details</h1>
+
+        <!-- Personal Details -->
+        <div class="details-section" id="personalDetails">
+            <h2>Personal Details</h2>
+            <p><strong>Name:</strong> <span id="teacherName">Loading...</span></p>
+            <p><strong>Contact No:</strong> <span id="teacherContact">Loading...</span></p>
+            <p><strong>Blood Group:</strong> <span id="teacherBloodGroup">Loading...</span></p>
+            <p><strong>Subject:</strong> <span id="teacherSubject">Loading...</span></p>
+        </div>
+
+        <!-- Documents Section -->
+        <div class="details-section" id="documentsSection">
+            <h2>Documents</h2>
+            <div class="resume">
+                <a href="" id="resumeLink" target="_blank">Download Resume</a>
+                <a href="" id="joiningLetterLink" target="_blank">Download Joining Letter</a>
+            </div>
+        </div>
+
+        <!-- Previous School Details -->
+        <div class="details-section" id="previousSchoolDetails">
+            <h2>Previous School Details</h2>
+            <p><strong>School Name:</strong> <span id="previousSchoolName">Loading...</span></p>
+            <p><strong>Contact No:</strong> <span id="previousSchoolContact">Loading...</span></p>
+            <p><strong>Address:</strong> <span id="previousSchoolAddress">Loading...</span></p>
+        </div>
+
+        <!-- Address Section -->
+        <div class="details-section" id="addressDetails">
+            <h2>Address</h2>
+            <p><strong>Current Address:</strong> <span id="currentAddress">Loading...</span></p>
+            <p><strong>Permanent Address:</strong> <span id="permanentAddress">Loading...</span></p>
+        </div>
+
+        <!-- Bank Details Section -->
+        <div class="details-section" id="bankDetails">
+            <h2>Bank Details</h2>
+            <p><strong>Bank Name:</strong> <span id="bankName">Loading...</span></p>
+            <p><strong>Branch Name:</strong> <span id="branchName">Loading...</span></p>
+            <p><strong>IFSC Code:</strong> <span id="ifscCode">Loading...</span></p>
+        </div>
+
+        <!-- ID Proof Section -->
+        <div class="details-section" id="idProof">
+            <h2>ID Proof</h2>
+            <p><strong>Pan Number:</strong> <span id="panNumber">Loading...</span></p>
+        </div>
+    </div>
+   
+    <script>
+        // Fetching the teacher details from localStorage
+        const teacherData = JSON.parse(localStorage.getItem("teacherData"));
+        if (teacherData && teacherData.length > 0) {
+            const teacher = teacherData[teacherData.length - 1]; // Get the latest added teacher
+
+            // Populate the fields dynamically
+            document.getElementById("teacherName").textContent = teacher.name;
+            document.getElementById("teacherContact").textContent = teacher.contact;
+            document.getElementById("teacherBloodGroup").textContent = teacher.bloodGroup || 'N/A';
+            document.getElementById("teacherSubject").textContent = teacher.subject;
+            
+            document.getElementById("resumeLink").href = teacher.resume || '#';
+            document.getElementById("joiningLetterLink").href = teacher.joiningLetter || '#';
+
+            document.getElementById("previousSchoolName").textContent = teacher.previousSchool || 'N/A';
+            document.getElementById("previousSchoolContact").textContent = teacher.previousSchoolContact || 'N/A';
+            document.getElementById("previousSchoolAddress").textContent = teacher.previousSchoolAddress || 'N/A';
+
+            document.getElementById("currentAddress").textContent = teacher.currentAddress;
+            document.getElementById("permanentAddress").textContent = teacher.permanentAddress;
+
+            document.getElementById("bankName").textContent = teacher.bankName || 'N/A';
+            document.getElementById("branchName").textContent = teacher.branchName || 'N/A';
+            document.getElementById("ifscCode").textContent = teacher.ifscCode || 'N/A';
+
+            document.getElementById("panNumber").textContent = teacher.panNumber || 'N/A';
+        } else {
+            alert("No teacher data found!");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+       /* Sidebar Toggle Button */
+       #sidebarToggle {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1100;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-sans flex">
+
+    <!-- Sidebar -->
+    <button id="sidebarToggle" class="sm:hidden bg-indigo-600 text-white px-3 py-2 rounded-md">
+        ☰
+    </button>
+
+    <div id="sidebar" class="fixed w-60 bg-[#2c3e50] text-white h-screen flex flex-col items-center py-6 transform sm:translate-x-0 -translate-x-full transition-transform duration-300 z-1000">
+        <img src="img/logo mps.jpg" alt="MPS Logo" class="w-16 h-16 rounded-full mb-4">
+        <h2 class="text-lg mb-6">Maheshwari Public School</h2>
+        <select id="schoolDropdown" onchange="openSchoolDashboard()" class="bg-[#2c3e50] text-white py-2 px-3 rounded-lg mb-6 w-3/4">
+            <option value="">Select a School</option>
+            <option value="Branch 1">Pratap Nagar Jaipur</option>
+            <option value="Branch 2">Jawahar Nagar Jaipur</option>
+            <option value="Branch 3">Tilak Nagar Jaipur</option>
+            <option value="Branch 4">Sanskriti Bani Park Jaipur</option>
+            <option value="Branch 5">Sanskriti Jagatpura Jaipur</option>
+        </select>
+        <a href="teacherdash.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Dashboard</a>
+        <a href="teacherstudentpage.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Students</a>
+        <a href="teacherassigment.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Assignments</a>
+        <a href="tStudentDetails.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Examination</a>
+        <a href="profile.html" class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Profile</a>
+        <a href="feedbackformteacher.html" class="w-full text-center py-2 px-4 bg-blue-500 rounded-lg mb-2">Feedback</a>
+        <a href="login.html" onclick="return confirm('Are you sure you want to logout?')" 
+           class="w-full text-center py-2 px-4 hover:bg-[#2c3e50] rounded-lg mb-2">Logout</a>
+    </div>
+
+    
+
+    <div class="flex items-center justify-center w-full h-screen sm:ml-60 p-6">
+        <div class="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
+            <h2 class="text-2xl sm:text-4xl text-center font-semibold text-gray-800 mb-6">Student Information</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto bg-white rounded-lg shadow-md overflow-hidden">
+                    <thead class="bg-indigo-600 text-white">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-sm sm:text-lg">Roll No</th>
+                            <th class="py-3 px-4 text-left text-sm sm:text-lg">Name</th>
+                            <th class="py-3 px-4 text-left text-sm sm:text-lg">Parent's Phone</th>
+                            <th class="py-3 px-4 text-left text-sm sm:text-lg">Gender</th>
+                            <th class="py-3 px-4 text-center text-sm sm:text-lg">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <!-- Student 1 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">101</td>
+                    <td class="py-3 px-4 text-sm">Aadhya Kapoor</td>
+                    <td class="py-3 px-4 text-sm">(123) 456-7890</td>
+                    <td class="py-3 px-4 text-sm">Female</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 2 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">102</td>
+                    <td class="py-3 px-4 text-sm">Anaya Singh</td>
+                    <td class="py-3 px-4 text-sm">(987) 654-3210</td>
+                    <td class="py-3 px-4 text-sm">Female</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet102.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 3 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">103</td>
+                    <td class="py-3 px-4 text-sm">Diya Sharma</td>
+                    <td class="py-3 px-4 text-sm">(555) 123-4567</td>
+                    <td class="py-3 px-4 text-sm">Female</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet103.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 4 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">104</td>
+                    <td class="py-3 px-4 text-sm">Devansh Yadav</td>
+                    <td class="py-3 px-4 text-sm">(111) 222-3333</td>
+                    <td class="py-3 px-4 text-sm">Male</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet104.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 5 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">105</td>
+                    <td class="py-3 px-4 text-sm">Reyansh Verma</td>
+                    <td class="py-3 px-4 text-sm">(333) 444-5555</td>
+                    <td class="py-3 px-4 text-sm">Male</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet105.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 6 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">106</td>
+                    <td class="py-3 px-4 text-sm">Rohan Joshi</td>
+                    <td class="py-3 px-4 text-sm">(666) 777-8888</td>
+                    <td class="py-3 px-4 text-sm">Male</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet106.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 7 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">107</td>
+                    <td class="py-3 px-4 text-sm">Krish Singh</td>
+                    <td class="py-3 px-4 text-sm">(444) 555-6666</td>
+                    <td class="py-3 px-4 text-sm">Male</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet107.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 8 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">108</td>
+                    <td class="py-3 px-4 text-sm">Priya Yadav</td>
+                    <td class="py-3 px-4 text-sm">(777) 888-9999</td>
+                    <td class="py-3 px-4 text-sm">Female</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet108.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 9 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">109</td>
+                    <td class="py-3 px-4 text-sm">Rhea Verma</td>
+                    <td class="py-3 px-4 text-sm">(999) 111-2222</td>
+                    <td class="py-3 px-4 text-sm">Female</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet109.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+                <!-- Student 10 -->
+                <tr class="bg-gray-50 hover:bg-indigo-100 transition-all">
+                    <td class="py-3 px-4 text-sm">110</td>
+                    <td class="py-3 px-4 text-sm">Rohan Joshi</td>
+                    <td class="py-3 px-4 text-sm">(888) 777-6666</td>
+                    <td class="py-3 px-4 text-sm">Male</td>
+                    <td class="py-3 px-4 text-center">
+                        <a href="marksheet110.html" class="bg-indigo-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-indigo-500 transition-colors">Result</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('sidebarToggle');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+</body>
+</html>
